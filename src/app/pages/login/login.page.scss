@@ -1,0 +1,165 @@
+ion-content {
+  --background: #fafafa;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --overflow: hidden;
+  display: block;
+  height: 100%;
+}
+
+.login-container {
+  display: block;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto 0 auto;
+  min-height: 0;
+  flex: 1 0 auto;
+  margin-bottom: 40px;
+}
+
+.login-box {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  padding: 20px 40px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.logo-container {
+  margin: 20px 0 30px;
+}
+
+.logo {
+  font-size: 50px;
+  color: #262626;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #262626;
+  font-weight: 500;
+  text-align: left;
+}
+
+.form-item {
+  --background: #fafafa;
+  --border-color: #dbdbdb;
+  --border-radius: 3px;
+  --border-width: 1px;
+  --border-style: solid;
+  margin-bottom: 6px;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --min-height: 38px;
+  
+  ion-input {
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    font-size: 12px;
+  }
+}
+
+.login-button {
+  --background: #e653ba;
+  --background-hover: #b62b8c;
+  --background-activated: #b62b8c;
+  --border-radius: 4px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  margin: 10px 0;
+  height: 32px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  color: #8e8e8e;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 10px 0 18px;
+  
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #dbdbdb;
+    margin: 0 10px;
+  }
+}
+
+.forgot-password {
+  color: #5a1b8d;
+  font-size: 13px;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.signup-box {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup-link {
+  color: #f150c1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Estilos para navegador en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: #121212;
+    
+    .login-box,
+    .signup-box {
+      background: #1e1e1e;
+      border-color: #333;
+    }
+    
+    .form-item {
+      --background: #121212;
+      --border-color: #333;
+    }
+    
+    .logo {
+      color: #f5f5f5;
+    }
+
+    .forgot-password {
+      color: #bb86fc;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .login-container {
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .login-box {
+    padding: 16px 6px;
+  }
+  .signup-box {
+    padding: 12px 6px;
+  }
+}
