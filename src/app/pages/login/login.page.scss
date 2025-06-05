@@ -23,19 +23,10 @@ ion-content {
   width: 100%;
   background: white;
   border: 1px solid #dbdbdb;
-  border-radius: 1px;
+  border-radius: 15px;
   padding: 20px 40px;
   margin-bottom: 10px;
   text-align: center;
-}
-
-.logo-container {
-  margin: 20px 0 30px;
-}
-
-.logo {
-  font-size: 50px;
-  color: #262626;
 }
 
 .login-form {
@@ -113,7 +104,7 @@ ion-content {
   width: 100%;
   background: white;
   border: 1px solid #dbdbdb;
-  border-radius: 1px;
+  border-radius: 15px;
   padding: 20px;
   text-align: center;
   font-size: 14px;
@@ -123,6 +114,26 @@ ion-content {
   color: #f150c1;
   font-weight: 600;
   text-decoration: none;
+}
+
+/* Animación para el logo */
+@keyframes logoAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-logo {
+  height: 170px;
+  width: auto;
+  margin: 0 auto 30px auto;
+  display: block;
+  animation: logoAnimation 1s ease-out;
 }
 
 /* Estilos para navegador en modo oscuro */
