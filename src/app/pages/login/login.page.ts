@@ -69,6 +69,6 @@ export class LoginPage {
     }
 
     // Si las validaciones pasan, redirige al usuario a la página de inicio
-    this.router.navigate(['/home'], {state: { username: this.username }});
+    this.router.navigate(['/tabs'], {state: { username: this.username }});
   }
 }

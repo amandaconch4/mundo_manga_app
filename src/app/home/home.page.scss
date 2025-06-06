@@ -1,10 +1,17 @@
+ion-header {
+  ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+  }
+}
+
 ion-content {
-    --background : #E6D6F3; /* Elimina cualquier fondo global */
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    --padding-top: 0;
-    --padding-start: 0;
+  --background: #E6D6F3;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  --padding-top: 0;
+  --padding-start: 0;
 }
 
 .logo-container {
