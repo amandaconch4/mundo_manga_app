@@ -35,3 +35,13 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Estilos globales */
+//Fondo de la aplicación
+ion-content {
+  --background: #E6D6F3;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+

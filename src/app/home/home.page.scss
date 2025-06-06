@@ -6,10 +6,6 @@ ion-header {
 }
 
 ion-content {
-  --background: #E6D6F3;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
   --padding-top: 0;
   --padding-start: 0;
 }
@@ -22,8 +18,9 @@ ion-content {
 }
 
 .main-logo {
-  height: 90px;
+  height: 120px;
   width: auto;
+  margin: 0 auto 30px auto;
   display: block;
 }
 
