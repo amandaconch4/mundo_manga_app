@@ -1,17 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="logo-container">
+    <!-- Logo -->
+    <img src="assets/logo.png" alt="MundoManga Logo" class="main-logo">
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!-- Mensaje de bienvenida -->
+  <div class="container">
+    <h2 class="welcome-message">¡Bienvenid&#64; {{username}}!</h2>
+  </div>
 
   <div id="container">
     <strong>Ready to create an app?</strong>

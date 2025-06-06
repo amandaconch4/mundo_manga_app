@@ -1,6 +1,9 @@
 ion-content {
-  --background: #fafafa;
-  --padding-top: 20px;
+  --background: #E6D6F3;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  --padding-top: 0;
   --padding-bottom: 20px;
   --padding-start: 20px;
   --padding-end: 20px;
@@ -11,12 +14,12 @@ ion-content {
 
 .login-container {
   display: block;
-  padding: 20px;
+  padding: 5px;
   max-width: 400px;
-  margin: 20px auto 0 auto;
+  margin: 0 auto;
   min-height: 0;
   flex: 1 0 auto;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .login-box {
@@ -54,7 +57,7 @@ ion-content {
   --padding-start: 10px;
   --padding-end: 10px;
   --min-height: 38px;
-  
+
   ion-input {
     --padding-top: 10px;
     --padding-bottom: 10px;
@@ -82,7 +85,7 @@ ion-content {
   font-size: 13px;
   font-weight: 600;
   margin: 10px 0 18px;
-  
+
   &::before,
   &::after {
     content: '';
@@ -122,6 +125,7 @@ ion-content {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -129,9 +133,9 @@ ion-content {
 }
 
 .main-logo {
-  height: 170px;
+  height: 230px;
   width: auto;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 10px auto;
   display: block;
   animation: logoAnimation 1s ease-out;
 }
@@ -140,18 +144,18 @@ ion-content {
 @media (prefers-color-scheme: dark) {
   ion-content {
     --background: #121212;
-    
+
     .login-box,
     .signup-box {
       background: #1e1e1e;
       border-color: #333;
     }
-    
+
     .form-item {
       --background: #121212;
       --border-color: #333;
     }
-    
+
     .logo {
       color: #f5f5f5;
     }
@@ -164,13 +168,15 @@ ion-content {
 
 @media (max-width: 500px) {
   .login-container {
-    padding: 10px;
-    margin-top: 10px;
+    padding: 5px;
+    margin-top: 0;
   }
+
   .login-box {
-    padding: 16px 6px;
-  }
-  .signup-box {
     padding: 12px 6px;
+  }
+
+  .signup-box {
+    padding: 10px 6px;
   }
 }

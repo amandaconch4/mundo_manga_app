@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,17 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class HomePage {
+  username: string = '';
 
-  constructor() {}
+  constructor(
+    private router: Router,
+  ) {
+
+    // Obtener el username del estado de la navegación
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.username = (navigation.extras.state as any).username;
+    }
+  }
 
 }
