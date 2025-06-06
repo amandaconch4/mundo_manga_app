@@ -43,5 +43,57 @@ ion-content {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  --padding-top: 0 
+  --margin-top: 0 
+}
+
+/* Estilos para el menú */
+ion-menu {
+  --background: #E6D6F3;
+  
+  ion-toolbar {
+    --background: #E6D6F3;
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-item {
+    --background: transparent;
+    --color: #5a1b8d;
+    margin: 10px 0;
+    
+    &.selected {
+      --background: rgba(230, 214, 243, 0.5);
+      --color: #e653ba;
+    }
+
+    ion-icon {
+      color: #e653ba;
+    }
+  }
+}
+
+/* Estilos globales para headers y toolbars */
+ion-header {
+  ion-toolbar {
+    --background: #E6D6F3;
+    --border-width: 0;
+    --border-style: none;
+    --box-shadow: none;
+    --min-height: 56px;
+    --border-color: transparent;
+    box-shadow: none !important;
+  }
+}
+
+ion-menu-button {
+  --color: #db1ca2;
+}
+
+/* Estilos para el contenido principal */
+.container {
+  padding: 16px;
 }
 

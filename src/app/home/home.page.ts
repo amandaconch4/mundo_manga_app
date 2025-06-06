@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ export class HomePage {
 
   constructor(
     private router: Router,
+    private menu: MenuController
   ) {
 
     // Obtener el username del estado de la navegación

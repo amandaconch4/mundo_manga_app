@@ -1,3 +1,34 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu menuId="menu" contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <ion-list>
+        <ion-item routerLink="/tabs/home" routerDirection="root" routerLinkActive="selected">
+          <ion-icon name="home" slot="start"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-item>
+        <ion-item routerLink="/tabs/mangateca" routerDirection="root" routerLinkActive="selected">
+          <ion-icon name="book" slot="start"></ion-icon>
+          <ion-label>Mangateca</ion-label>
+        </ion-item>
+        <ion-item routerLink="/tabs/wishlist" routerDirection="root" routerLinkActive="selected">
+          <ion-icon name="heart" slot="start"></ion-icon>
+          <ion-label>Wishlist</ion-label>
+        </ion-item>
+        <ion-item routerLink="/tabs/novedades" routerDirection="root" routerLinkActive="selected">
+          <ion-icon name="newspaper" slot="start"></ion-icon>
+          <ion-label>Novedades</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
 </ion-app>

@@ -1,12 +1,17 @@
-<ion-header [translucent]="true">
-  <div class="logo-container">
-    <!-- Logo -->
-    <img src="assets/logo.png" alt="MundoManga Logo" class="main-logo">
-  </div>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<div class="logo-container">
+  <!-- Logo -->
+  <img src="assets/logo.png" alt="MundoManga Logo" class="main-logo">
+</div>
 
+<ion-content [fullscreen]="true" class="ion-padding">
   <!-- Mensaje de bienvenida -->
   <div class="container">
     <h2 class="welcome-message">¡Bienvenid&#64; {{username}}!</h2>
