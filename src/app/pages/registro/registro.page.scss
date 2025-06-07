@@ -1,3 +1,55 @@
+//Estilos para el header y el logo
+ion-header {
+  ion-toolbar {
+    --background: #E6D6F3;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  ion-buttons {
+    margin-left: -8px;
+    color: #e653ba;
+  }
+
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-logo {
+    height: 30px;
+    width: auto;
+  }
+}
+
+//Estilos para el título del formulario
+.form-title {
+  color: #5a1b8d;
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 20px 0;
+  animation: slideInLeft 1s ease-out;
+}
+
+//Animación para el título del formulario
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+//Estilos para el formulario de registro
 .user-form {
   max-width: 600px;
   margin: 20px auto;
@@ -31,6 +83,7 @@
   }
 }
 
+//Estilos para el calendario
 mat-form-field {
   width: 100%;
   
