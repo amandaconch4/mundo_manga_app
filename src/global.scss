@@ -36,6 +36,9 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+/** Angular Material **/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 /* Estilos globales */
 //Fondo de la aplicación
 ion-content {

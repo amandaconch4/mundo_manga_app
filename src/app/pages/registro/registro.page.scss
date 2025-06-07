@@ -1,0 +1,69 @@
+.user-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ion-color-dark);
+  font-weight: 500;
+}
+
+.form-item {
+  --background: var(--ion-color-light);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  
+  ion-input, ion-select {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  
+  ::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  ::ng-deep .mat-datepicker-toggle {
+    color: #e653ba;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding: 8px 0;
+  }
+}
+
+.button-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  
+  // Estilos para los botones
+  ion-button {
+    flex: 1;
+    --border-radius: 8px;
+    margin: 0;
+    --background: #e653ba;
+    --background-hover: #b62b8c;
+    --background-activated: #b62b8c;
+  }
+}
