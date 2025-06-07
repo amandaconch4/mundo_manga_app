@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RegistroPageRoutingModule } from './registro-routing.module';
 import { RegistroPage } from './registro.page';
+import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
 
 // Imports para el calendario
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'; 
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  declarations: [RegistroPage]
+  declarations: [RegistroPage],
+  providers: [FormatearFechaPipe]
 })
 export class RegistroPageModule {}

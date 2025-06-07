@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.page.html',
   styleUrls: ['./registro.page.scss'],
-  standalone: false,
+  standalone: false
 })
 
 export class RegistroPage {
@@ -19,7 +20,8 @@ export class RegistroPage {
 
   constructor(
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private formatearFechaPipe: FormatearFechaPipe
   ) { }
 
   // Método que muestra alerta de error
@@ -173,7 +175,7 @@ export class RegistroPage {
         Nombre completo: ${this.nombre}
         Correo: ${this.correo}
         Nivel Educacional: ${this.nivelEducacional}
-        Fecha de Nacimiento: ${this.fechaNacimiento}
+        Fecha de Nacimiento: ${this.formatearFechaPipe.transform(this.fechaNacimiento)}
       `,
       buttons: [{
         text: 'OK',
