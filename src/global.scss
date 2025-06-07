@@ -88,6 +88,29 @@ ion-header {
     --min-height: 56px;
     --border-color: transparent;
     box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  ion-buttons {
+    margin-left: -8px;
+    color: #e653ba;
+  }
+
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-logo {
+    height: 30px;
+    width: auto;
   }
 }
 
