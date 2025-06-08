@@ -13,9 +13,13 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <!-- Mensaje de bienvenida -->
-  <div class="container">
-    <h2>MANGAS</h2>
+  <div class="welcome-container" *ngIf="showWelcomeMessage">
     <h2 class="welcome-message">¡Bienvenid&#64; {{username}}!</h2>
+  </div>
+
+  <!-- Título MANGAS -->
+  <div class="container">
+    <h2 class="manga-title">MANGAS</h2>
   </div>
 
   <!-- Listado de Mangas -->

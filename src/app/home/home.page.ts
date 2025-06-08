@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -8,8 +8,10 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+
+export class HomePage implements OnInit {
   username: string = '';
+  showWelcomeMessage: boolean = true;
 
   // Listado de mangas
   mangas = [
@@ -80,5 +82,12 @@ export class HomePage {
     if (navigation?.extras.state) {
       this.username = (navigation.extras.state as any).username;
     }
+  }
+
+  ngOnInit() {
+    // Oculta el mensaje de bienvenida después de 5 segundos
+    setTimeout(() => {
+      this.showWelcomeMessage = false;
+    }, 5000);
   }
 }
