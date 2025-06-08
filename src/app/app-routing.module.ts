@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
+  {
+    path: 'detalle-manga',
+    loadChildren: () => import('./pages/detalle-manga/detalle-manga.module').then( m => m.DetalleMangaPageModule)
+  },
 ];
 
 @NgModule({
