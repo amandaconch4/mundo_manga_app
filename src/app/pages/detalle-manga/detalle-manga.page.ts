@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 interface Manga {
   nombre: string;
-  volumen: number;
+  volumen: string;
   autor: string;
   genero: string;
   sinopsis: string;
