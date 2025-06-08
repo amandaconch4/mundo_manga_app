@@ -92,6 +92,12 @@
       --background-activated: #d13da8;
     }
 
+    &.wishlist-button-remove {
+      --background: #dc3545;
+      --background-hover: #c82333;
+      --background-activated: #c82333;
+    }
+
     &.collection-button {
       --background: #5a1b8d;
       --background-hover: #4a1673;

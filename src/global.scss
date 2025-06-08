@@ -56,24 +56,41 @@ ion-menu {
   
   ion-toolbar {
     --background: #E6D6F3;
+    
+    ion-title {
+      color: #5a1b8d;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
   }
 
   ion-list {
     background: transparent;
+    padding: 8px;
   }
 
   ion-item {
-    --background: transparent;
+    --background: #E6D6F3;
     --color: #5a1b8d;
-    margin: 10px 0;
+    margin: 8px 0;
+    border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-end: 16px;
+    --border-color: transparent;
     
     &.selected {
-      --background: rgba(230, 214, 243, 0.5);
+      --background: rgba(230, 83, 186, 0.1);
       --color: #e653ba;
     }
 
     ion-icon {
       color: #e653ba;
+      margin-right: 12px;
+    }
+
+    ion-label {
+      font-weight: 500;
     }
   }
 }

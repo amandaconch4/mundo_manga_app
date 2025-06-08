@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wishlist',
@@ -16,7 +17,7 @@ export class WishlistPage implements OnInit {
       autor: 'Natsu Hyūga', 
       genero: 'Misterio',
       sinopsis: 'Maomao es una joven que trabaja como sirvienta en la corte imperial, quien usa sus conocimientos de medicina y herboristería para resolver misterios y desentrañar intrigas palaciegas',
-      imagen: 'assets/mangas/mangas-novedades/diarios_boticaria_7.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/diarios_boticaria_7.jpg'
     },
     { 
       nombre: 'Wind Breaker', 
@@ -24,7 +25,7 @@ export class WishlistPage implements OnInit {
       autor: 'Satoru Nii', 
       genero: 'Acción',
       sinopsis: 'La historia sigue a Ai Hoshino, una idol que es asesinada, y a sus hijos gemelos que buscan venganza mientras navegan por el oscuro mundo del entretenimiento japonés.',
-      imagen: 'assets/mangas/mangas-novedades/wind_breaker_1.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/wind_breaker_1.jpg'
     },
     { 
       nombre: 'Haikyu!!', 
@@ -32,7 +33,7 @@ export class WishlistPage implements OnInit {
       autor: 'Haruichi Furudate', 
       genero: 'Deporte',
       sinopsis: 'La historia sigue a Shoyo Hinata, un joven apasionado por el voleibol que se inspira en el "Pequeño Gigante", un jugador de la escuela Karasuno. A pesar de su baja estatura, Hinata se esfuerza por alcanzar su sueño de convertirse en una estrella del voleibol.',
-      imagen: 'assets/mangas/mangas-novedades/haikyu_24.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/haikyu_24.jpg'
     },
     { 
       nombre: 'Monster',
@@ -40,7 +41,7 @@ export class WishlistPage implements OnInit {
       autor: 'Naoki Urasawa', 
       genero: 'Triller psicológico',
       sinopsis: 'Kenzo Tenma es un neurocirujano que decide operar a un niño herido, Johan Liebert, en lugar de a un político influyente. Johan, sin embargo, resulta ser un asesino psicópata que causa un gran caos.',
-      imagen: 'assets/mangas/mangas-novedades/monster_3.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/monster_3.jpg'
     },
     { 
       nombre: 'Signos de afecto', 
@@ -48,7 +49,7 @@ export class WishlistPage implements OnInit {
       autor: 'Suu Morishita', 
       genero: 'Romance',
       sinopsis: 'Yuki, una joven con problemas de audición se enamora de un chico llamado Itsuomi. A través de su relación, Yuki aprende a superar sus inseguridades y a comunicarse mejor con los demás.',
-      imagen: 'assets/mangas/mangas-novedades/signos_de_afecto_2.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/signos_de_afecto_2.jpg'
     },
     { 
       nombre: 'Mi amor por Yamada está al Nv. 999', 
@@ -56,7 +57,7 @@ export class WishlistPage implements OnInit {
       autor: 'Mashiro', 
       genero: 'Romance',
       sinopsis: 'Akane, una estudiante universitaria que tras una ruptura amorosa, se sumerge en un MMORPG donde conoce a Yamada, un jugador talentoso y reservado.',
-      imagen: 'assets/mangas/mangas-novedades/yamada_999_1.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/yamada_999_1.jpg'
     },
     { 
       nombre: 'Frieren', 
@@ -64,21 +65,32 @@ export class WishlistPage implements OnInit {
       autor: 'Kanehito Yamada', 
       genero: 'Fantasía', 
       sinopsis: 'Frieren es una maga elfa que formó parte de un grupo de héroes que derrotó al Rey Demonio. Después de la muerte de sus compañeros, decide emprender un viaje para comprender mejor la humanidad y el paso del tiempo.',
-      imagen: 'assets/mangas/mangas-novedades/frieren_11.jpeg'
+      imagen: 'assets/mangas/mangas-wishlist/frieren_11.jpeg'
     },
     {
-      nombre: 'Re:Zero - Empezar de cero en un mundo diferente',
+      nombre: 'Re:Zero',
       volumen: 1,
       autor: 'Tappei Nagatsuki',
       genero: 'Fantasía oscura',
       sinopsis: 'Natsuki Subaru, un joven que es teletransportado a un mundo de fantasía. Allí, se ve envuelto en una serie de eventos donde muere repetidamente y, cada vez que muere, vuelve al punto de partida.',
-      imagen: 'assets/mangas/mangas-novedades/re_zero_1.jpg'
+      imagen: 'assets/mangas/mangas-wishlist/re_zero_1.jpg'
     }
   ];
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
 
+  // Método para navegar a la página de detalle del manga desde la wishlist
+  verDetalleManga(manga: any) {
+    this.navCtrl.navigateForward('/detalle-manga', {
+      state: { 
+        manga,
+        fromWishlist: true
+      }
+    });
+  }
 }

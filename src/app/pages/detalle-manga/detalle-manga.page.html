@@ -54,12 +54,16 @@
 
       <!-- Botones wishlist y colección -->
       <div class="action-buttons">
-        <ion-button expand="block" class="wishlist-button">
-          <ion-icon name="heart-outline" slot="start"></ion-icon>
-          Añadir a Wishlist
+        <!-- Botón dinámico de wishlist que cambia según si el manga está añadido en la wishlist o no -->
+        <!-- (click): Solo aparece quitarDeWishlist() si el manga viene de la wishlist -->
+        <ion-button expand="block" 
+                    [class]="esDeWishlist ? 'wishlist-button-remove' : 'wishlist-button'"
+                    (click)="esDeWishlist ? quitarDeWishlist() : null">
+          <ion-icon [name]="esDeWishlist ? 'trash-outline' : 'heart-outline'" slot="start"></ion-icon>
+          {{ esDeWishlist ? 'Quitar de Mi Wishlist' : 'Añadir a Wishlist' }}
         </ion-button>
         
-        <!-- Botón dinámico de colección que cambia según si el manga está añadido en la wishlist o no -->
+        <!-- Botón dinámico de colección que cambia según si el manga está añadido en la colección o no -->
         <!-- (click): Solo aparece quitarDeColeccion() si el manga viene de la mangateca -->
         <ion-button expand="block" 
                     [class]="esDeMangateca ? 'collection-button-remove' : 'collection-button'"

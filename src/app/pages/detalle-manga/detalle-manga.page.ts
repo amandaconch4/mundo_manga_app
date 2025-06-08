@@ -17,9 +17,11 @@ interface Manga {
   styleUrls: ['./detalle-manga.page.scss'],
   standalone: false
 })
+
 export class DetalleMangaPage implements OnInit {
   manga: Manga | undefined;
   esDeMangateca: boolean = false;
+  esDeWishlist: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,13 +34,20 @@ export class DetalleMangaPage implements OnInit {
     const navigation = window.history.state;
     if (navigation && navigation.manga) {
       this.manga = navigation.manga;
-      // Verificamos si el manga viene de la mangateca
+      // Verificamos si el manga viene de la mangateca o wishlist
       this.esDeMangateca = navigation.fromMangateca || false;
+      this.esDeWishlist = navigation.fromWishlist || false;
     }
   }
 
   quitarDeColeccion() {
     // Aquí irá próximamente la lógica para quitar el manga de la colección
+    // Por ahora solo retornará a la página anterior
+    this.navCtrl.back();
+  }
+
+  quitarDeWishlist() {
+    // Aquí irá próximamente la lógica para quitar el manga de la wishlist
     // Por ahora solo retornará a la página anterior
     this.navCtrl.back();
   }
