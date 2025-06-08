@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mangateca',
@@ -76,9 +77,20 @@ export class MangatecaPage implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
 
+  // Método para navegar a la página de detalle del manga
+  verDetalleManga(manga: any) {
+    this.navCtrl.navigateForward('/detalle-manga', {
+      state: { 
+        manga,
+        fromMangateca: true
+      }
+    });
+  }
 }

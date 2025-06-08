@@ -59,9 +59,13 @@
           Añadir a Wishlist
         </ion-button>
         
-        <ion-button expand="block" class="collection-button">
-          <ion-icon name="library-outline" slot="start"></ion-icon>
-          Añadir a Mi Colección
+        <!-- Botón dinámico de colección que cambia según si el manga está añadido en la wishlist o no -->
+        <!-- (click): Solo aparece quitarDeColeccion() si el manga viene de la mangateca -->
+        <ion-button expand="block" 
+                    [class]="esDeMangateca ? 'collection-button-remove' : 'collection-button'"
+                    (click)="esDeMangateca ? quitarDeColeccion() : null">
+          <ion-icon [name]="esDeMangateca ? 'trash-outline' : 'library-outline'" slot="start"></ion-icon>
+          {{ esDeMangateca ? 'Quitar de Mi Colección' : 'Añadir a Mi Colección' }}
         </ion-button>
       </div>
     </div>

@@ -97,5 +97,11 @@
       --background-hover: #4a1673;
       --background-activated: #4a1673;
     }
+
+    &.collection-button-remove {
+      --background: #dc3545;
+      --background-hover: #c82333;
+      --background-activated: #c82333;
+    }
   }
 }
