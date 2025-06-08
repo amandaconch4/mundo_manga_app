@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -83,7 +83,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private navCtrl: NavController
   ) {
     // Obtener el username del estado de la navegación
     const navigation = this.router.getCurrentNavigation();
@@ -97,5 +98,11 @@ export class HomePage implements OnInit {
     setTimeout(() => {
       this.showWelcomeMessage = false;
     }, 5000);
+  }
+
+  verDetalleManga(manga: any) {
+    this.navCtrl.navigateForward('/detalle-manga', {
+      state: { manga }
+    });
   }
 }
