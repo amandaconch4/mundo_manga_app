@@ -14,11 +14,21 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <!-- Mensaje de bienvenida -->
   <div class="container">
+    <h2>MANGAS</h2>
     <h2 class="welcome-message">¡Bienvenid&#64; {{username}}!</h2>
   </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <!-- Listado de Mangas -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let manga of mangas">
+        <ion-card>
+          <img [src]="manga.imagen" [alt]="manga.nombre" class="manga-cover">
+          <ion-card-header>
+            <ion-card-title>{{manga.nombre}} #{{manga.volumen}}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
