@@ -16,7 +16,7 @@ export class WishlistPage implements OnInit {
       volumen: 7, 
       autor: 'Natsu Hyūga', 
       genero: 'Misterio',
-      sinopsis: 'Maomao es una joven que trabaja como sirvienta en la corte imperial, quien usa sus conocimientos de medicina y herboristería para resolver misterios y desentrañar intrigas palaciegas',
+      sinopsis: 'Maomao es una joven que trabaja como sirvienta en la corte imperial, quien usa sus conocimientos de medicina y herboristería para resolver misterios y desentrañar intrigas palaciegas.',
       imagen: 'assets/mangas/mangas-wishlist/diarios_boticaria_7.jpg'
     },
     { 
@@ -24,7 +24,7 @@ export class WishlistPage implements OnInit {
       volumen: 1, 
       autor: 'Satoru Nii', 
       genero: 'Acción',
-      sinopsis: 'La historia sigue a Ai Hoshino, una idol que es asesinada, y a sus hijos gemelos que buscan venganza mientras navegan por el oscuro mundo del entretenimiento japonés.',
+      sinopsis: 'Sakura Haruka, que ha pasado toda su infancia peleando, se inscribe en la infame preparatoria de delincuentes conocida como Furin, con la esperanza de llegar a la cima y convertirse en el peleador más fuerte. Sin embargo, la escuela no es lo que esperaba y rápidamente se da cuenta de que Furin es un grupo que pelea para proteger a su pueblo.',
       imagen: 'assets/mangas/mangas-wishlist/wind_breaker_1.jpg'
     },
     { 

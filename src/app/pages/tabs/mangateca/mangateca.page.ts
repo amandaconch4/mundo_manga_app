@@ -32,7 +32,7 @@ export class MangatecaPage implements OnInit {
       volumen: 'Único',
       autor: 'Daruma Matsuura', 
       genero: 'Drama',
-      sinopsis: 'Está centrado en la pérdida y el duelo, explorando cómo Ima y Tsurumi, dos personajes que cargan con el peso de la pérdida, se enfrentan a su sufrimiento y buscan formas de seguir adelante',
+      sinopsis: 'Está centrado en la pérdida y el duelo, explorando cómo Ima y Tsurumi, dos personajes que cargan con el peso de la pérdida, se enfrentan a su sufrimiento y buscan formas de seguir adelante.',
       imagen: 'assets/mangas/mangas-mi-coleccion/imakako.jpg'
     },
     { 
@@ -40,7 +40,7 @@ export class MangatecaPage implements OnInit {
       volumen: 8, 
       autor: 'Kei Sanbe', 
       genero: 'Suspenso',
-      sinopsis: 'narra la historia de Satoru Fujinuma, un aspirante a mangaka que tiene la habilidad de viajar al pasado para evitar tragedias. Tras descubrir que su madre fue asesinada, Satoru se ve obligado a viajar 18 años al pasado para detener el secuestro y asesinato de su compañera de clase, Kayo.',
+      sinopsis: 'Satoru Fujinuma, un aspirante a mangaka tiene la habilidad de viajar al pasado para evitar tragedias. Tras descubrir que su madre fue asesinada, Satoru se ve obligado a viajar 18 años al pasado para detener el secuestro y asesinato de su compañera de clase, Kayo.',
       imagen: 'assets/mangas/mangas-mi-coleccion/erased_8.jpg'
     },
     { 
@@ -54,7 +54,7 @@ export class MangatecaPage implements OnInit {
     { 
       nombre: 'Anohana', 
       volumen: 2, 
-      autor: 'Mitsu Izumi', 
+      autor: 'Cho-Heiwa Busters, Mitsu Izumi', 
       genero: 'Drama', 
       sinopsis: 'Narra la historia de un grupo de amigos de la infancia que se separan después de la trágica muerte de uno de ellos, Meiko "Menma" Honma.',
       imagen: 'assets/mangas/mangas-mi-coleccion/anohana_2.jpg'

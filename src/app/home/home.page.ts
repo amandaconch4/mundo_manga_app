@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
       volumen: 51, 
       autor: 'Eiichiro Oda', 
       genero: 'Aventura',
-      sinopsis:'Narra la historia de Monkey D. Luffy, un joven que sueña con convertirse en el Rey de los Piratas. Para ello, viaja por el Grand Line buscando el legendario tesoro llamado One Piece', 
+      sinopsis:'Narra la historia de Monkey D. Luffy, un joven que sueña con convertirse en el Rey de los Piratas. Para ello, viaja por el Grand Line buscando el legendario tesoro llamado One Piece.', 
       imagen: 'assets/mangas/mangas-home/one_piece_51.jpg'
     },
     { 

@@ -1,10 +1,18 @@
 //Estilos para el título del formulario
 .form-title {
+  text-align: center;
   color: #5a1b8d;
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin: 20px 0;
-  animation: slideInLeft 1s ease-out;
+  margin-bottom: 24px;
+  font-size: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  .profile-icon {
+    font-size: 1.2em;
+    color: #e653ba;
+  }
 }
 
 //Animación para el título del formulario

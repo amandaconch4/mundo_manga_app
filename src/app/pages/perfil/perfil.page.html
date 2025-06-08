@@ -19,7 +19,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <h1 class="form-title">Mi Perfil</h1>
+  <h1 class="form-title">
+    Mi Perfil
+    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+  </h1>
   <!-- Formulario de perfil -->
   <form class="user-form" (ngSubmit)="guardarCambios()">
     <div class="form-group">
