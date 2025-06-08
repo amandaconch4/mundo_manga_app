@@ -9,4 +9,9 @@ import { MenuController } from '@ionic/angular';
 })
 export class AppComponent {
   constructor(private menu: MenuController) {}
+
+  // Método para que se cierre el menú al hacer clic en una opción
+  closeMenu() {
+    this.menu.close();
+  }
 }
