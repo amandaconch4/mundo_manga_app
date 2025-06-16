@@ -1,3 +1,15 @@
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.header-logo {
+  height: 30px;
+  width: auto;
+}
+
 .error-container {
   display: flex;
   flex-direction: column;
@@ -18,7 +30,7 @@ h1 {
   font-size: 6rem;
   font-weight: bold;
   margin: 0;
-  color: var(--ion-color-primary);
+  color: #5a1b8d;
   line-height: 1;
 }
 
@@ -32,6 +44,9 @@ ion-button {
   --border-radius: 25px;
   margin-top: 1rem;
   max-width: 300px;
+  --background: #e653ba;
+  --background-hover: #d13da8;
+  --background-activated: #d13da8;
 }
 
 @media (max-width: 576px) {

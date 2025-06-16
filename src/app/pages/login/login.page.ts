@@ -68,6 +68,9 @@ export class LoginPage {
       return;
     }
 
+    // Si las validaciones pasan, se simula sesión activa
+    localStorage.setItem('userActive', 'true');
+
     // Si las validaciones pasan, redirige al usuario a la página de inicio
     this.router.navigate(['/tabs'], {state: { username: this.username }});
   }

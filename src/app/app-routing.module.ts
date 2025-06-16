@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
     {
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
     {
     path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -21,11 +23,13 @@ const routes: Routes = [
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'detalle-manga',
-    loadChildren: () => import('./pages/detalle-manga/detalle-manga.module').then( m => m.DetalleMangaPageModule)
+    loadChildren: () => import('./pages/detalle-manga/detalle-manga.module').then( m => m.DetalleMangaPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'recuperar-contrasenia',

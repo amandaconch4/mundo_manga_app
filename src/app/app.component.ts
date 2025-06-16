@@ -21,6 +21,8 @@ export class AppComponent {
 
   // Método para cerrar sesión
   cerrarSesion() {
+    // Elimina el usuario activo del localStorage
+    localStorage.removeItem('userActive');
     this.menu.close();
     this.router.navigate(['/login']);
   }
