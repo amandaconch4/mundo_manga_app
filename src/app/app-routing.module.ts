@@ -32,13 +32,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar-contrasenia/recuperar-contrasenia.module').then( m => m.RecuperarContraseniaPageModule)
   },
   {
-    path: 'not-found',
+    path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
-  {
-    path: '**',
-    redirectTo: 'not-found'
-  }
 ];
 
 @NgModule({
