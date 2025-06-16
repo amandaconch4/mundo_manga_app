@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Página no encontrada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="error-container">
+    <ion-icon name="alert-circle-outline" class="error-icon"></ion-icon>
+    <h1>404</h1>
+    <h2>¡Ups! Página no encontrada</h2>
+    <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+    <ion-button expand="block" routerLink="/home">
+      <ion-icon name="home-outline" slot="start"></ion-icon>
+      Volver al inicio
+    </ion-button>
+  </div>
+</ion-content>
