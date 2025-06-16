@@ -21,7 +21,7 @@
       <div class="form-group">
         <label class="form-label">Nombre de usuario</label>
         <ion-item lines="none" class="form-item">
-          <ion-input type="text" [(ngModel)]="user" name="user" required style="position: relative; width: 100%;"></ion-input>
+          <ion-input type="text" [(ngModel)]="username" name="username" required style="position: relative; width: 100%;"></ion-input>
         </ion-item>
       </div>
 
@@ -35,7 +35,7 @@
       <div class="form-group">
         <label class="form-label">Correo</label>
         <ion-item lines="none" class="form-item">
-          <ion-input type="email" [(ngModel)]="correo" name="correo" required style="position: relative; width: 100%;"></ion-input>
+          <ion-input type="email" [(ngModel)]="email" name="email" required style="position: relative; width: 100%;"></ion-input>
         </ion-item>
       </div>
 
@@ -49,7 +49,7 @@
       <div class="form-group">
         <label class="form-label">Nivel Educación</label>
         <ion-item lines="none" class="form-item">
-          <ion-select [(ngModel)]="nivelEducacional" name="nivelEducacional" placeholder="Seleccione nivel">
+          <ion-select [(ngModel)]="nivelEducacion" name="nivelEducacion" placeholder="Seleccione nivel">
             <ion-select-option value="ninguno">Sin estudios</ion-select-option>
             <ion-select-option value="basica">Educación Básica</ion-select-option>
             <ion-select-option value="media">Educación Media</ion-select-option>

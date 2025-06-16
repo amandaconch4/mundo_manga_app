@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { DatabaseServiceService } from '../../services/database-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,23 @@ import { AlertController } from '@ionic/angular';
   standalone: false,
 })
 
-export class LoginPage {
-
+export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
+  dbLista: boolean = false;
 
-  constructor(private router: Router, private alertController: AlertController) { }
+  constructor(
+    private router: Router, 
+    private alertController: AlertController,
+    private databaseService: DatabaseServiceService
+  ) { }
+
+  ngOnInit() {
+    // Se subscribe al observable de la base de datos para verificar si está lista
+    this.databaseService.getDbLista().subscribe(isReady => {
+      this.dbLista = isReady;
+    });
+  }
 
   // Método que muestra alerta de error
   async mostrarAlerta(mensaje: string) {
@@ -39,39 +51,52 @@ export class LoginPage {
     return regex.test(password);
   }
 
-  login() {
+  async login() {
     // Elimina espacios en blanco
     this.username = this.username.trim();
     this.password = this.password.trim();
 
     // Verifica que el campo username no esté vacío
     if (!this.username) {
-      this.mostrarAlerta('El campo nombre de usuario no puede estar vacío');
+      await this.mostrarAlerta('El campo nombre de usuario no puede estar vacío');
       return;
     }
 
     // Valida que el campo username tenga un formato válido
     if (!this.validarUsername(this.username)) {
-      this.mostrarAlerta('El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos');
+      await this.mostrarAlerta('El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos');
       return;
     }
 
     // Verifica que el campo password no esté vacío
     if (!this.password) {
-      this.mostrarAlerta('El campo contraseña no puede estar vacío');
+      await this.mostrarAlerta('El campo contraseña no puede estar vacío');
       return;
     }
 
     // Valida que el campo password tenga un formato válido
     if (!this.validarPassword(this.password)) {
-      this.mostrarAlerta('La contraseña debe tener 4 números');
+      await this.mostrarAlerta('La contraseña debe tener 4 números');
       return;
     }
 
-    // Si las validaciones pasan, se simula sesión activa
-    localStorage.setItem('userActive', 'true');
+    try {
+      const passwordNumero = parseInt(this.password);
 
-    // Si las validaciones pasan, redirige al usuario a la página de inicio
-    this.router.navigate(['/tabs'], {state: { username: this.username }});
+      // Validar usuario en la base de datos
+      const usuario = await this.databaseService.validarUsuario(this.username, passwordNumero);
+      
+      if (usuario === null) {
+        await this.mostrarAlerta('Usuario o contraseña incorrectos');
+        return;
+      }
+
+      // Si el usuario existe, se guarda en localStorage y se redirige
+      localStorage.setItem('userActive', 'true');
+      this.router.navigate(['/tabs'], {state: { username: this.username }});
+    } catch (error) {
+      console.error('Error en login:', error);
+      await this.mostrarAlerta('Error al validar el usuario. Por favor, intente nuevamente.');
+    }
   }
 }

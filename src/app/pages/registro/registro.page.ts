@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
+import { DatabaseServiceService } from '../../services/database-service.service';
 
 @Component({
   selector: 'app-registro',
@@ -11,18 +12,30 @@ import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
 })
 
 export class RegistroPage {
-  user: string = '';
+  username: string = '';
   nombre: string = '';
-  correo: string = '';
+  email: string = '';
   password: string = '';
-  nivelEducacional: string = '';
+  nivelEducacion: string = '';
   fechaNacimiento: string = '';
+
+  dbLista: boolean = false; // Variable para verificar si la base de datos está lista
 
   constructor(
     private alertController: AlertController,
     private router: Router,
-    private formatearFechaPipe: FormatearFechaPipe
+    private formatearFechaPipe: FormatearFechaPipe,
+    private databaseService: DatabaseServiceService
   ) { }
+
+  ngOnInit() {
+    // Se subscribe al observable de la base de datos para verificar si está lista
+    this.databaseService.getDbLista().subscribe(isReady => {
+      this.dbLista = isReady;
+      if (isReady) {
+      }
+    });
+  }
 
   // Método que muestra alerta de error
   async mostrarAlerta(mensaje: string) {
@@ -48,9 +61,9 @@ export class RegistroPage {
   }
 
   // Método para validar formato de correo
-  validarCorreo(correo: string): boolean {
+  validarCorreo(email: string): boolean {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(correo);
+    return regex.test(email);
   }
 
   // Método para validar nombre completo
@@ -86,27 +99,27 @@ export class RegistroPage {
   }
 
   limpiarFormulario() {
-    this.user = '';
+    this.username = '';
     this.nombre = '';
-    this.correo = '';
+    this.email = '';
     this.password = '';
-    this.nivelEducacional = '';
+    this.nivelEducacion = '';
     this.fechaNacimiento = '';
   }
 
   async registrar() {
     // Eliminar espacios en blanco
-    this.user = this.user.trim();
+    this.username = this.username.trim();
     this.nombre = this.nombre.trim();
-    this.correo = this.correo.trim();
+    this.email = this.email.trim();
     this.password = this.password.trim();
 
     // Validar nombre de usuario
-    if (!this.user) {
+    if (!this.username) {
       await this.mostrarAlerta('El nombre de usuario no puede estar vacío.');
       return;
     }
-    if (!this.validarUsername(this.user)) {
+    if (!this.validarUsername(this.username)) {
       await this.mostrarAlerta('El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos.');
       return;
     }
@@ -122,11 +135,11 @@ export class RegistroPage {
     }
 
     // Validar correo
-    if (!this.correo) {
+    if (!this.email) {
       await this.mostrarAlerta('El correo electrónico no puede estar vacío.');
       return;
     }
-    if (!this.validarCorreo(this.correo)) {
+    if (!this.validarCorreo(this.email)) {
       await this.mostrarAlerta('Por favor, ingresa un correo electrónico válido.');
       return;
     }
@@ -142,7 +155,7 @@ export class RegistroPage {
     }
 
     // Validar nivel educacional
-    if (!this.nivelEducacional) {
+    if (!this.nivelEducacion) {
       await this.mostrarAlerta('Debes seleccionar un nivel educacional.');
       return;
     }
@@ -167,24 +180,39 @@ export class RegistroPage {
       return;
     }
 
-    // Si todas las validaciones pasan, mostrar mensaje de éxito
-    const alert = await this.alertController.create({
-      header: 'Registro exitoso',
-      message: `
-        Nombre de usuario: ${this.user}
-        Nombre completo: ${this.nombre}
-        Correo: ${this.correo}
-        Nivel Educacional: ${this.nivelEducacional}
-        Fecha de Nacimiento: ${this.formatearFechaPipe.transform(this.fechaNacimiento)}
-      `,
-      buttons: [{
-        text: 'OK',
-        handler: () => {
-          this.router.navigate(['/login']);
-        }
-      }]
-    });
+    // Si todas las validaciones pasan, guarda en la base de datos
+    try {
+      await this.databaseService.insertarUsuario(
+        this.nombre,
+        this.username,
+        this.email,
+        parseInt(this.password),
+        this.nivelEducacion,
+        this.fechaNacimiento
+      );
 
-    await alert.present();
+      // Mostrar mensaje de éxito
+      const alert = await this.alertController.create({
+        header: 'Registro exitoso',
+        message: `
+          Nombre de usuario: ${this.username}
+          Nombre completo: ${this.nombre}
+          Correo: ${this.email}
+          Nivel Educacional: ${this.nivelEducacion}
+          Fecha de Nacimiento: ${this.formatearFechaPipe.transform(this.fechaNacimiento)}
+        `,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.limpiarFormulario();
+            this.router.navigate(['/login']);
+          }
+        }]
+      });
+
+      await alert.present();
+    } catch (error) {
+      await this.mostrarAlerta('Error al registrar el usuario. Por favor, intente nuevamente.');
+    }
   }
 }

@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RegistroPageRoutingModule } from './registro-routing.module';
 import { RegistroPage } from './registro.page';
 import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
+import { DatabaseServiceService } from '../../services/database-service.service';
 
 // Imports para el calendario
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -24,6 +25,6 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   declarations: [RegistroPage],
-  providers: [FormatearFechaPipe]
+  providers: [FormatearFechaPipe, DatabaseServiceService]
 })
 export class RegistroPageModule {}
