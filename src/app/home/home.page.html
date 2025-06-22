@@ -22,16 +22,14 @@
     <h2 class="manga-title">MANGAS</h2>
   </div>
 
-  <!-- Listado de Mangas -->
+  <!-- Listado de Mangas usando el componente MangaCard -->
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let manga of mangas">
-        <ion-card (click)="verDetalleManga(manga)">
-          <img [src]="manga.imagen" [alt]="manga.nombre" class="manga-cover">
-          <ion-card-header>
-            <ion-card-title>{{manga.nombre}} #{{manga.volumen}}</ion-card-title>
-          </ion-card-header>
-        </ion-card>
+        <app-manga-card 
+          [manga]="manga"
+          (mangaClick)="verDetalleManga($event)">
+        </app-manga-card>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,0 +1,9 @@
+<ion-card class="manga-card" (click)="onMangaClick()">
+  <!-- Imagen del manga -->
+  <img [src]="manga.imagen" [alt]="manga.nombre" class="manga-image">
+  
+  <!-- Contenido de la tarjeta -->
+  <ion-card-header>
+    <ion-card-title>{{ manga.nombre }} #{{ manga.volumen }}</ion-card-title>
+  </ion-card-header>
+</ion-card>

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { WishlistPageRoutingModule } from './wishlist-routing.module';
 
 import { WishlistPage } from './wishlist.page';
+import { MangaCardComponent } from '../../../components/manga-card/manga-card.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    WishlistPageRoutingModule
+    WishlistPageRoutingModule,
+    MangaCardComponent
   ],
   declarations: [WishlistPage]
 })

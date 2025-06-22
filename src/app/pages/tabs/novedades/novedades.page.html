@@ -18,16 +18,14 @@
     <h2 class="novedades-title">NOVEDADES</h2>
   </div>
 
-  <!-- Listado de Novedades de mangas -->
+  <!-- Listado de Novedades de mangas usando el componente MangaCard -->
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let novedad of novedades">
-        <ion-card (click)="verDetalleManga(novedad)">
-          <img [src]="novedad.imagen" [alt]="novedad.nombre" class="novedad-cover">
-          <ion-card-header>
-            <ion-card-title>{{novedad.nombre}} #{{novedad.volumen}}</ion-card-title>
-          </ion-card-header>
-        </ion-card>
+        <app-manga-card 
+          [manga]="novedad"
+          (mangaClick)="verDetalleManga($event)">
+        </app-manga-card>
       </ion-col>
     </ion-row>
   </ion-grid>

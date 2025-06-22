@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { MangatecaPageRoutingModule } from './mangateca-routing.module';
 
 import { MangatecaPage } from './mangateca.page';
+import { MangaCardComponent } from '../../../components/manga-card/manga-card.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MangatecaPageRoutingModule
+    MangatecaPageRoutingModule,
+    MangaCardComponent
   ],
   declarations: [MangatecaPage]
 })
