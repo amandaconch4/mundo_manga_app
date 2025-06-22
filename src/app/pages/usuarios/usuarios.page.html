@@ -19,7 +19,6 @@
     <ion-item *ngFor="let usuario of usuarios">
       <ion-label>
         <h2>{{ usuario.name }}</h2>
-        <p>{{ usuario.username }}</p>
         <p>{{ usuario.email }}</p>
       </ion-label>
     </ion-item>
@@ -27,13 +26,20 @@
 
   <!-- Sección para añadir usuario -->
   <div class="add-user-section">
-    <ion-item>
-      <ion-input label="Nombre" label-placement="floating" [(ngModel)]="newUsuario.name" placeholder="Ingrese nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Correo" label-placement="floating" [(ngModel)]="newUsuario.correo" placeholder="Ingrese correo"></ion-input>
-    </ion-item>
-    <ion-button expand="full" (click)="nuevoUsuario()">Añadir Usuario</ion-button>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Añadir Nuevo Usuario</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-input label="Nombre" label-placement="floating" [(ngModel)]="newUsuario.name" placeholder="Ingrese nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Email" label-placement="floating" [(ngModel)]="newUsuario.email" placeholder="Ingrese correo"></ion-input>
+        </ion-item>
+        <ion-button expand="full" (click)="nuevoUsuario()">Añadir Usuario</ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
 
 </ion-content>

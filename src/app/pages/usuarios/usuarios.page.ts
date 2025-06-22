@@ -12,7 +12,7 @@ import { ApiUsuariosService } from 'src/app/services/api-usuarios.service';
 export class UsuariosPage implements OnInit {
 
   usuarios: any[] = []; // Arreglo para almacenar los usuarios
-  newUsuario = {name: '', correo: ''}; // Nuevo usuario
+  newUsuario = {name: '', email: ''}; // Nuevo usuario
 
   constructor(private alertController: AlertController,
     private apiUsuariosService: ApiUsuariosService,
@@ -36,7 +36,7 @@ export class UsuariosPage implements OnInit {
       (response) => {
         this.mostrarAlerta('Usuario añadido correctamente:', response);
         this.usuarios.push(response); // Añade el nuevo usuario al arreglo
-        this.newUsuario = { name: '', correo: '' }; // Resetea el formulario
+        this.newUsuario = { name: '', email: '' }; // Resetea el formulario
       },
       (error) => {
         this.mostrarAlerta('Error', 'No se pudo añadir el usuario.');

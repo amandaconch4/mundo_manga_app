@@ -37,8 +37,33 @@ ion-label p {
     padding: 0 16px;
 }
 
+.add-user-section ion-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.add-user-section ion-card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.add-user-section ion-card-title {
+    color: #5a1b8d;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+}
+
+.add-user-section ion-card-content {
+    padding: 16px;
+}
+
 .add-user-section ion-item {
     margin-bottom: 10px;
+    --background: transparent;
+    --border-radius: 8px;
+    --border-color: #e9ecef;
 }
 
 // Estilos para el botón de añadir usuario
