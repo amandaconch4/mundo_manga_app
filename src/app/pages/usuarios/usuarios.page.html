@@ -1,13 +1,39 @@
-<ion-header [translucent]="true">
+<!-- Encabezado -->
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>usuarios</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+    <!-- Logo de la aplicación -->
+    <div class="logo-container">
+      <img src="assets/logo_letras.png" alt="MundoManga Logo" class="header-logo">
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">usuarios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1 class="usuarios-title">USUARIOS</h1>
+
+  <!-- Lista de usuarios -->
+  <ion-list>
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{ usuario.name }}</h2>
+        <p>{{ usuario.username }}</p>
+        <p>{{ usuario.email }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Sección para añadir usuario -->
+  <div class="add-user-section">
+    <ion-item>
+      <ion-input label="Nombre" label-placement="floating" [(ngModel)]="newUsuario.name" placeholder="Ingrese nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Correo" label-placement="floating" [(ngModel)]="newUsuario.correo" placeholder="Ingrese correo"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="nuevoUsuario()">Añadir Usuario</ion-button>
+  </div>
+
 </ion-content>
