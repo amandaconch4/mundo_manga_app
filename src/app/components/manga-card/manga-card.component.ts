@@ -15,9 +15,9 @@ export interface Manga {
   selector: 'app-manga-card',
   templateUrl: './manga-card.component.html',
   styleUrls: ['./manga-card.component.scss'],
-  standalone: true,
   imports: [CommonModule, IonicModule]
 })
+
 export class MangaCardComponent {
   @Input() manga!: Manga;
   @Output() mangaClick = new EventEmitter<Manga>();
