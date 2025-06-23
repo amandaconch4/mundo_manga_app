@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController} from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
+
 export class AppComponent {
   constructor(
     private menu: MenuController,
-    private router: Router
+    private router: Router,
   ) {}
 
   // Método para que se cierre el menú al hacer clic en una opción

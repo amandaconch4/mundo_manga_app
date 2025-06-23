@@ -37,11 +37,18 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    loadChildren: () => import('./pages/usuarios/usuarios.module').then( m => m.UsuariosPageModule)
+    loadChildren: () => import('./pages/usuarios/usuarios.module').then( m => m.UsuariosPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'camara',
-    loadChildren: () => import('./pages/camara/camara.module').then( m => m.CamaraPageModule)
+    loadChildren: () => import('./pages/camara/camara.module').then( m => m.CamaraPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'ubicacion',
+    loadChildren: () => import('./pages/ubicacion/ubicacion.module').then( m => m.UbicacionPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

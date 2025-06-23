@@ -26,6 +26,11 @@
           <ion-icon name="people" slot="start"></ion-icon>
           <ion-label>Usuarios</ion-label>
         </ion-item>
+        <!-- Opción de Ubicación -->
+        <ion-item button routerLink="/ubicacion" routerDirection="root" routerLinkActive="selected" (click)="closeMenu()">
+          <ion-icon name="location" slot="start"></ion-icon>
+          <ion-label>Ubicación</ion-label>
+        </ion-item>
         <!-- Opción de Cerrar Sesión -->
         <ion-item button (click)="cerrarSesion()">
           <ion-icon name="log-out" slot="start"></ion-icon>
