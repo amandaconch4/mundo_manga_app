@@ -23,6 +23,24 @@
     Mi Perfil
     <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
   </h1>
+  
+  <!-- Sección de foto de perfil -->
+  <div class="profile-photo-section">
+    <div class="profile-photo-container">
+      <img 
+        [src]="profileImage || 'assets/icon/favicon.png'" 
+        class="profile-photo"
+        (error)="onImageError($event)">
+      <div class="photo-overlay" (click)="showPhotoOptions()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+    </div>
+    <ion-button fill="clear" (click)="showPhotoOptions()" class="change-photo-btn">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      Cambiar Foto
+    </ion-button>
+  </div>
+
   <!-- Formulario de perfil -->
   <form class="user-form" (ngSubmit)="guardarCambios()">
     <div class="form-group">

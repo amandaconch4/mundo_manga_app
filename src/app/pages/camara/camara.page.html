@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="camera-container">
+    <h2>Tomar Foto de Perfil</h2>
+    
+    <!-- Vista previa de la imagen -->
+    <div class="image-preview" *ngIf="imageSource">
+      <img [src]="imageSource" alt="Vista previa" class="preview-image">
+    </div>
+    
+    <!-- Botones de acción -->
+    <div class="button-container">
+      <ion-button expand="block" (click)="takePicture()" class="btn-camera">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        Tomar Foto
+      </ion-button>
+      
+      <ion-button expand="block" (click)="selectFromGallery()" class="btn-gallery">
+        <ion-icon name="images-outline" slot="start"></ion-icon>
+        Seleccionar de Galería
+      </ion-button>
+      
+      <ion-button expand="block" (click)="saveImage()" class="btn-save" *ngIf="imageSource">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Guardar como Foto de Perfil
+      </ion-button>
+      
+      <ion-button expand="block" (click)="clearImage()" class="btn-clear" *ngIf="imageSource">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Limpiar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
