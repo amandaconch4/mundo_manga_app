@@ -49,7 +49,11 @@ export class PerfilPage implements OnInit {
           this.profileImage = usuario.imagen ? usuario.imagen : 'assets/icon/favicon.png';
         }
       } catch (error) {
-        await this.mostrarAlerta('Error', 'No se pudieron cargar los datos del usuario.');
+        console.error('Error al cargar datos del usuario:', error);
+        // Muestra una alerta si hay un error al cargar los datos
+        if (error instanceof Error && error.message.includes('database')) {
+          await this.mostrarAlerta('Error', 'No se pudieron cargar los datos del usuario.');
+        }
       }
     }
   }

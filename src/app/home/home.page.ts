@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
     private menu: MenuController,
     private navCtrl: NavController
   ) {
-    // Obtener el username del estado de la navegación
+    // Obtener el username del estado de la navegación (solo al iniciar sesión)
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.username = (navigation.extras.state as any).username;
@@ -94,10 +94,20 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    // Obtener el username del localStorage si no se obtuvo del estado de navegación
+    if (!this.username) {
+      this.username = localStorage.getItem('username') || '';
+    }
+    
     // Oculta el mensaje de bienvenida después de 5 segundos
     setTimeout(() => {
       this.showWelcomeMessage = false;
     }, 5000);
+  }
+
+  ionViewWillEnter() {
+    // Obtener el username del localStorage cada vez que se entra a la página
+    this.username = localStorage.getItem('username') || '';
   }
 
   verDetalleManga(manga: any) {
