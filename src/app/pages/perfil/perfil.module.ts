@@ -23,7 +23,10 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  declarations: [PerfilPage],
+  declarations: [
+    PerfilPage,
+    FormatearFechaPipe
+  ],
   providers: [FormatearFechaPipe]
 })
 export class PerfilPageModule { }

@@ -87,11 +87,7 @@
     <div class="form-group">
       <label class="form-label">Fecha de Nacimiento</label>
       <ion-item lines="none" class="form-item">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+        <ion-input type="text" [readonly]="true" [value]="fechaNacimiento | formatearFecha" name="fechaNacimiento" required></ion-input>
       </ion-item>
     </div>
 

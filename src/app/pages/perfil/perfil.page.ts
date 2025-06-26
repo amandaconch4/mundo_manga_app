@@ -33,18 +33,36 @@ export class PerfilPage implements OnInit {
     private databaseService: DatabaseServiceService) { }
 
   
+  // Carga los datos del usuario desde la base de datos
+  async cargarDatosUsuario() {
+    const username = localStorage.getItem('username');
+    if (username) {
+      try {
+        const usuario = await this.databaseService.getUsuarioPorUsername(username);
+        if (usuario) {
+          this.user = usuario.username;
+          this.nombre = usuario.nombre;
+          this.correo = usuario.email;
+          this.password = usuario.password.toString();
+          this.nivelEducacional = usuario.nivelEducacion;
+          this.fechaNacimiento = usuario.fechaNacimiento ? usuario.fechaNacimiento.toString() : '';
+        }
+      } catch (error) {
+        await this.mostrarAlerta('Error', 'No se pudieron cargar los datos del usuario.');
+      }
+    }
+  }
+
   // Carga la imagen de perfil guardada
   ngOnInit() {
     this.loadProfileImage();
-    const username = localStorage.getItem('username');
-    if (username) {
-      this.user = username;
-    }
+    this.cargarDatosUsuario();
   }
 
   //Recarga la imagen de perfil por si se actualizó desde otra página
   ionViewWillEnter() {
     this.loadProfileImage();
+    this.cargarDatosUsuario();
   }
 
   //Carga la imagen de perfil desde el almacenamiento local

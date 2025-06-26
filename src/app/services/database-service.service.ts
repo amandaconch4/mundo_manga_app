@@ -112,4 +112,17 @@ export class DatabaseServiceService {
   getDbLista() {
     return this.dbLista.asObservable();
   }
+
+  async getUsuarioPorUsername(username: string) {
+    try {
+      const resultado = await this.db.executeSql('SELECT * FROM usuarios WHERE username = ?', [username]);
+      if (resultado.rows.length > 0) {
+        return resultado.rows.item(0);
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al obtener usuario:', error);
+      throw error;
+    }
+  }
 }
