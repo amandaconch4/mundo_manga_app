@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { FormatearFechaPipe } from '../../pipes/formatear-fecha.pipe';
 import { ProfileImageService } from '../../services/profile-image.service';
+import { DatabaseServiceService } from '../../services/database-service.service';
 
 @Component({
   selector: 'app-perfil',
@@ -28,12 +29,17 @@ export class PerfilPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private router: Router,
     private formatearFechaPipe: FormatearFechaPipe,
-    private profileImageService: ProfileImageService) { }
+    private profileImageService: ProfileImageService,
+    private databaseService: DatabaseServiceService) { }
 
   
   // Carga la imagen de perfil guardada
   ngOnInit() {
     this.loadProfileImage();
+    const username = localStorage.getItem('username');
+    if (username) {
+      this.user = username;
+    }
   }
 
   //Recarga la imagen de perfil por si se actualizó desde otra página
@@ -251,8 +257,14 @@ export class PerfilPage implements OnInit {
         },
         {
           text: 'Eliminar',
-          handler: () => {
-            this.router.navigate(['/login']);
+          handler: async () => {
+            try {
+              await this.databaseService.eliminarUsuario(this.user);
+              await this.mostrarAlerta('Éxito', 'Cuenta eliminada correctamente.');
+              this.router.navigate(['/login']);
+            } catch (error) {
+              await this.mostrarAlerta('Error', 'No se pudo eliminar la cuenta.');
+            }
           }
         }
       ]

@@ -84,6 +84,21 @@ export class DatabaseServiceService {
     }
   }
 
+  async eliminarUsuario(username: string) {
+    try {
+      const resultado = await this.db.executeSql('DELETE FROM usuarios WHERE username = ?', [username]);
+      if (resultado.rowsAffected > 0) {
+        this.presentarToast('Usuario eliminado correctamente');
+      } else {
+        this.presentarToast('No se encontró el usuario');
+      }
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error);
+      this.presentarToast('Error al eliminar el usuario: ' + error);
+      throw error;
+    }
+  }
+
   private async presentarToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,

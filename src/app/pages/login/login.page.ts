@@ -93,6 +93,7 @@ export class LoginPage implements OnInit {
 
       // Si el usuario existe, se guarda en localStorage y se redirige
       localStorage.setItem('userActive', 'true');
+      localStorage.setItem('username', this.username);
       this.router.navigate(['/tabs'], {state: { username: this.username }});
     } catch (error) {
       console.error('Error en login:', error);
