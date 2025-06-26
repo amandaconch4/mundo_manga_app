@@ -17,6 +17,7 @@ export class DatabaseServiceService {
     this.iniciarDB();
   }
 
+  // Método para inicializar la base de datos
   private async iniciarDB() {
     try {
       const db = await this.sqlite.create({
@@ -33,6 +34,7 @@ export class DatabaseServiceService {
     }
   }
 
+  // Método para crear las tablas necesarias
   private async crearTablas() {
     try {
       await this.db.executeSql(`
@@ -46,13 +48,17 @@ export class DatabaseServiceService {
           fechaNacimiento TEXT NOT NULL
         );
       `, []);
-      console.log('Tabla usuarios creada o ya existente');
+
+      // Agrega la imagen si no existe
+      await this.db.executeSql('ALTER TABLE usuarios ADD COLUMN imagen TEXT', []).catch(() => {});
+      console.log('Tabla usuarios creada o ya existente (con columna imagen)');
     } catch (error) {
       console.error('Error al crear tabla usuarios:', error);
       throw error;
     }
   }
 
+  //Método para validar si existe un usuario con el username y password proporcionados
   async validarUsuario(username: string, password: number) {
     try {
       const resultado = await this.db.executeSql(
@@ -70,11 +76,12 @@ export class DatabaseServiceService {
     }
   }
 
-  async insertarUsuario(nombre: string, username: string, email: string, password: number, nivelEducacion: string, fechaNacimiento: string) {
+  //Método para insertar un nuevo usuario en la base de datos
+  async insertarUsuario(nombre: string, username: string, email: string, password: number, nivelEducacion: string, fechaNacimiento: string, imagen: string | null = null) {
     try {
       await this.db.executeSql(
-        'INSERT INTO usuarios (username, nombre, email, password, nivelEducacion, fechaNacimiento) VALUES (?, ?, ?, ?, ?, ?);',
-        [username, nombre, email, password, nivelEducacion, fechaNacimiento]
+        'INSERT INTO usuarios (username, nombre, email, password, nivelEducacion, fechaNacimiento, imagen) VALUES (?, ?, ?, ?, ?, ?, ?);',
+        [username, nombre, email, password, nivelEducacion, fechaNacimiento, imagen]
       );
       this.presentarToast('Usuario registrado correctamente');
     } catch (error) {
@@ -84,6 +91,7 @@ export class DatabaseServiceService {
     }
   }
 
+  // Método para eliminar un usuario por su username
   async eliminarUsuario(username: string) {
     try {
       const resultado = await this.db.executeSql('DELETE FROM usuarios WHERE username = ?', [username]);
@@ -99,6 +107,7 @@ export class DatabaseServiceService {
     }
   }
 
+  // Método para mostrar un mensaje de toast
   private async presentarToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
@@ -113,6 +122,7 @@ export class DatabaseServiceService {
     return this.dbLista.asObservable();
   }
 
+  // Método para obtener un usuario por su username
   async getUsuarioPorUsername(username: string) {
     try {
       const resultado = await this.db.executeSql('SELECT * FROM usuarios WHERE username = ?', [username]);
@@ -122,6 +132,18 @@ export class DatabaseServiceService {
       return null;
     } catch (error) {
       console.error('Error al obtener usuario:', error);
+      throw error;
+    }
+  }
+
+  // Método para actualizar la imagen de perfil de un usuario
+  async actualizarImagenUsuario(username: string, imagen: string) {
+    try {
+      await this.db.executeSql('UPDATE usuarios SET imagen = ? WHERE username = ?', [imagen, username]);
+      this.presentarToast('Imagen de perfil actualizada');
+    } catch (error) {
+      console.error('Error al actualizar imagen de usuario:', error);
+      this.presentarToast('Error al actualizar la imagen: ' + error);
       throw error;
     }
   }

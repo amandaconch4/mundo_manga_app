@@ -46,6 +46,7 @@ export class PerfilPage implements OnInit {
           this.password = usuario.password.toString();
           this.nivelEducacional = usuario.nivelEducacion;
           this.fechaNacimiento = usuario.fechaNacimiento ? usuario.fechaNacimiento.toString() : '';
+          this.profileImage = usuario.imagen ? usuario.imagen : 'assets/icon/favicon.png';
         }
       } catch (error) {
         await this.mostrarAlerta('Error', 'No se pudieron cargar los datos del usuario.');
@@ -111,7 +112,10 @@ export class PerfilPage implements OnInit {
     const imageDataUrl = await this.profileImageService.takePicture();
     if (imageDataUrl) {
       this.profileImage = imageDataUrl;
-      this.profileImageService.saveProfileImage(imageDataUrl);
+      const username = localStorage.getItem('username');
+      if (username) {
+        await this.databaseService.actualizarImagenUsuario(username, imageDataUrl);
+      }
       await this.mostrarAlerta('Éxito', 'Foto de perfil actualizada correctamente.');
     }
   }
@@ -121,7 +125,10 @@ export class PerfilPage implements OnInit {
     const imageDataUrl = await this.profileImageService.selectFromGallery();
     if (imageDataUrl) {
       this.profileImage = imageDataUrl;
-      this.profileImageService.saveProfileImage(imageDataUrl);
+      const username = localStorage.getItem('username');
+      if (username) {
+        await this.databaseService.actualizarImagenUsuario(username, imageDataUrl);
+      }
       await this.mostrarAlerta('Éxito', 'Foto de perfil actualizada correctamente.');
     }
   }
@@ -138,9 +145,12 @@ export class PerfilPage implements OnInit {
         },
         {
           text: 'Eliminar',
-          handler: () => {
-            this.profileImage = null;
-            this.profileImageService.removeProfileImage();
+          handler: async () => {
+            this.profileImage = 'assets/icon/favicon.png';
+            const username = localStorage.getItem('username');
+            if (username) {
+              await this.databaseService.actualizarImagenUsuario(username, '');
+            }
             this.mostrarAlerta('Éxito', 'Foto de perfil eliminada correctamente.');
           }
         }
