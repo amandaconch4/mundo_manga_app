@@ -91,6 +91,25 @@ export class DatabaseServiceService {
     }
   }
 
+  // Método para modificar un usuario existente
+  async modificarUsuario(username: string, nombre: string, password: number, nivelEducacion: string, email: string, fechaNacimiento: string, imagen: string | null = null) {
+    try {
+      const resultado = await this.db.executeSql(
+        'UPDATE usuarios SET nombre = ?, password = ?, nivelEducacion = ?, fechaNacimiento = ?, imagen = ?, email = ? WHERE username = ?',
+        [nombre, password, nivelEducacion, fechaNacimiento, imagen, email, username]
+      );
+      if (resultado.rowsAffected > 0) {
+        this.presentarToast('Usuario modificado correctamente');
+      } else {
+        this.presentarToast('No se encontró el usuario para modificar');
+      }
+    } catch (error) {
+      console.error('Error al modificar usuario:', error);
+      this.presentarToast('Error al modificar el usuario: ' + error);
+      throw error;
+    }
+  }
+
   // Método para eliminar un usuario por su username
   async eliminarUsuario(username: string) {
     try {

@@ -174,3 +174,11 @@ mat-form-field {
     margin-right: 8px;
   }
 }
+
+// Estilos para los campos de solo lectura
+.readonly-item {
+  background: #f3f3f3;
+  opacity: 0.8;
+  border: 1px dashed #ada9a9;
+  color: #757575;
+}

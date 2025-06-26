@@ -45,8 +45,9 @@
   <form class="user-form" (ngSubmit)="guardarCambios()">
     <div class="form-group">
       <label class="form-label">Nombre de usuario</label>
-      <ion-item lines="none" class="form-item">
-        <ion-input type="text" [(ngModel)]="user" name="user" required style="position: relative; width: 100%;"></ion-input>
+      <ion-item lines="none" class="form-item readonly-item">
+        <ion-input type="text" [readonly]="true" [(ngModel)]="user" name="user"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="end"></ion-icon>
       </ion-item>
     </div>
 
@@ -86,8 +87,9 @@
 
     <div class="form-group">
       <label class="form-label">Fecha de Nacimiento</label>
-      <ion-item lines="none" class="form-item">
-        <ion-input type="text" [readonly]="true" [value]="fechaNacimiento | formatearFecha" name="fechaNacimiento" required></ion-input>
+      <ion-item lines="none" class="form-item readonly-item">
+        <ion-input type="text" [readonly]="true" [value]="fechaNacimiento | formatearFecha" name="fechaNacimiento"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="end"></ion-icon>
       </ion-item>
     </div>
 

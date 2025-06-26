@@ -232,7 +232,6 @@ export class PerfilPage implements OnInit {
     this.correo = this.correo.trim();
     this.password = this.password.trim();
 
-    
     // Valida nombre de usuario
     if (!this.user || !this.validarUsername(this.user)) {
       await this.mostrarAlerta('Error', 'El nombre de usuario debe tener entre 3 y 8 caracteres alfanuméricos.');
@@ -269,8 +268,21 @@ export class PerfilPage implements OnInit {
       return;
     }
 
-    // Si todas las validaciones son correctas, se guardan los cambios
-    await this.mostrarAlerta('Éxito', 'Los cambios se han guardado correctamente.');
+    // Actualiza los datos en la base de datos
+    try {
+      await this.databaseService.modificarUsuario(
+        this.user, // username (no se cambia)
+        this.nombre,
+        parseInt(this.password),
+        this.nivelEducacional,
+        this.correo,
+        this.fechaNacimiento,
+        this.profileImage // imagen
+      );
+      await this.mostrarAlerta('Éxito', 'Los cambios se han guardado correctamente.');
+    } catch (error) {
+      await this.mostrarAlerta('Error', 'No se pudieron guardar los cambios.');
+    }
   }
 
   // Método para eliminar la cuenta del usuario
