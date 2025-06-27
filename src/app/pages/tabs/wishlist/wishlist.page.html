@@ -17,13 +17,30 @@
     <h2 class="wishlist-title"> MI WISHLIST</h2>
   </div>
 
+  <!-- Mensaje cuando no hay mangas en la wishlist -->
+  <div class="mensaje-vacio" *ngIf="wishlist.length === 0">
+    <ion-icon name="heart-outline" class="icono-vacio"></ion-icon>
+    <h3>Aún no has añadido mangas a tu wishlist</h3>
+    <p>Guarda aquí los mangas que te gustaría leer u obtener en el futuro</p>
+    <ion-button fill="outline" routerLink="/tabs/home">
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+      Explorar mangas
+    </ion-button>
+  </div>
+
   <!-- Listado de mangas en wishlist usando el componente MangaCard -->
-  <ion-grid>
+  <ion-grid *ngIf="wishlist.length > 0">
     <ion-row>
       <ion-col size="6" *ngFor="let manga of wishlist">
         <app-manga-card 
           [manga]="manga"
-          (mangaClick)="verDetalleManga($event)">
+          [showActions]="true"
+          [isInCollection]="manga.isInCollection ?? false"
+          [isInWishlist]="manga.isInWishlist ?? false"
+          (mangaClick)="verDetalleManga($event)"
+          (addToCollection)="agregarAColeccion($event)"
+          (removeFromWishlist)="quitarDeWishlist($event)"
+          (removeFromCollection)="quitarDeColeccion($event)">
         </app-manga-card>
       </ion-col>
     </ion-row>

@@ -19,7 +19,7 @@
 
   <!-- Título MANGAS -->
   <div class="container">
-    <h2 class="manga-title">MANGAS</h2>
+    <h2 class="manga-title">TODOS LOS MANGAS</h2>
   </div>
 
   <!-- Listado de Mangas usando el componente MangaCard -->
@@ -28,7 +28,14 @@
       <ion-col size="6" *ngFor="let manga of mangas">
         <app-manga-card 
           [manga]="manga"
-          (mangaClick)="verDetalleManga($event)">
+          [showActions]="true"
+          [isInCollection]="manga.isInCollection ?? false"
+          [isInWishlist]="manga.isInWishlist ?? false"
+          (mangaClick)="verDetalleManga($event)"
+          (addToCollection)="agregarAColeccion($event)"
+          (addToWishlist)="agregarAWishlist($event)"
+          (removeFromCollection)="quitarDeColeccion($event)"
+          (removeFromWishlist)="quitarDeWishlist($event)">
         </app-manga-card>
       </ion-col>
     </ion-row>

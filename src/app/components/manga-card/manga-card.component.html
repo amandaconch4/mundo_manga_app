@@ -6,4 +6,25 @@
   <ion-card-header>
     <ion-card-title>{{ manga.nombre }} #{{ manga.volumen }}</ion-card-title>
   </ion-card-header>
+
+  <!-- Botones de acción -->
+  <ion-card-content *ngIf="showActions" class="action-buttons">
+    <ion-button 
+      fill="clear" 
+      size="small" 
+      class="collection-button"
+      (click)="isInCollection ? onRemoveFromCollection($event) : onAddToCollection($event)">
+      <ion-icon [name]="isInCollection ? 'bookmark' : 'bookmark-outline'" slot="start"></ion-icon>
+      {{ isInCollection ? 'Quitar de colección' : 'Agregar a colección' }}
+    </ion-button>
+    
+    <ion-button 
+      fill="clear" 
+      size="small" 
+      class="wishlist-button"
+      (click)="isInWishlist ? onRemoveFromWishlist($event) : onAddToWishlist($event)">
+      <ion-icon [name]="isInWishlist ? 'heart' : 'heart-outline'" slot="start"></ion-icon>
+      {{ isInWishlist ? 'Quitar de wishlist' : 'Agregar a wishlist' }}
+    </ion-button>
+  </ion-card-content>
 </ion-card>

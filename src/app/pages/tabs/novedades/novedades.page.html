@@ -24,7 +24,14 @@
       <ion-col size="6" *ngFor="let novedad of novedades">
         <app-manga-card 
           [manga]="novedad"
-          (mangaClick)="verDetalleManga($event)">
+          [showActions]="true"
+          [isInCollection]="novedad.isInCollection ?? false"
+          [isInWishlist]="novedad.isInWishlist ?? false"
+          (mangaClick)="verDetalleManga($event)"
+          (addToCollection)="agregarAColeccion($event)"
+          (addToWishlist)="agregarAWishlist($event)"
+          (removeFromCollection)="quitarDeColeccion($event)"
+          (removeFromWishlist)="quitarDeWishlist($event)">
         </app-manga-card>
       </ion-col>
     </ion-row>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController, NavController, AlertController } from '@ionic/angular';
+import { DatabaseServiceService } from '../../../services/database-service.service';
+import { Manga } from '../../../components/manga-card/manga-card.component';
 
 @Component({
   selector: 'app-novedades',
@@ -10,84 +12,139 @@ import { MenuController, NavController } from '@ionic/angular';
 export class NovedadesPage implements OnInit {
 
   // Listado de mangas en novedades
-  novedades = [
-    { 
-      nombre: 'Oshi no ko', 
-      volumen: 16, 
-      autor: 'Aka Akasaka', 
-      genero: 'Comedia dramática',
-      sinopsis: 'La historia sigue a Ai Hoshino, una idol que es asesinada, y a sus hijos gemelos que buscan venganza mientras navegan por el oscuro mundo del entretenimiento japonés.',
-      imagen: 'assets/mangas/mangas-novedades/oshi_no_ko_16.jpg'
-    },
-    { 
-      nombre: 'Moriarty el patriota', 
-      volumen: 14, 
-      autor: 'Ryosuke Takeuchi', 
-      genero: 'Misterio',
-      sinopsis: 'Una reimaginación de Sherlock Holmes desde la perspectiva de su enemigo, James Moriarty, quien busca derrocar a la aristocracia británica.',
-      imagen: 'assets/mangas/mangas-novedades/moriarty_14.jpeg'
-    },
-    { 
-      nombre: 'Spy x Family',
-      volumen: 14,
-      autor: 'Tatsuya Endo', 
-      genero: 'Comedia de acción',
-      sinopsis: 'La historia sigue a un espía que debe formar una familia falsa para completar una misión, sin saber que su esposa es una asesina y su hija es una telépata.',
-      imagen: 'assets/mangas/mangas-novedades/spy_x_family_14.jpg'
-    },
-    { 
-      nombre: 'Komi-san no puede comunicarse', 
-      volumen: 16, 
-      autor: 'Tomohito Oda', 
-      genero: 'Comedia romántica',
-      sinopsis: 'Komi Shouko, una chica con problemas para comunicarse, intenta hacer 100 amigos mientras lidia con su ansiedad social y la presión de ser popular.',
-      imagen: 'assets/mangas/mangas-novedades/komi_san_16.jpg'
-    },
-    { 
-      nombre: 'Chainsaw man', 
-      volumen: 19, 
-      autor: 'Tatsuki Fujimoto', 
-      genero: 'Acción',
-      sinopsis: 'Sigue la historia de Denji, un joven que, tras la muerte de su padre y la traición de una organización, se convierte en un híbrido humano-demonio con la capacidad de convertirse en un hombre motosierra.',
-      imagen: 'assets/mangas/mangas-novedades/chainsaw_man_19.jpg'
-    },
-    { 
-      nombre: 'Hunter x Hunter', 
-      volumen: 38, 
-      autor: 'Yoshihiro Togashi', 
-      genero: 'Aventura', 
-      sinopsis: 'Gon Freecss, un joven que descubre que su padre es un cazador legendario, se embarca en una aventura para convertirse en cazador y encontrarlo.',
-      imagen: 'assets/mangas/mangas-novedades/hxh_38.jpg'
-    },
-    { 
-      nombre: 'Princesa bibliófila', 
-      volumen: 7, 
-      autor: 'Maki Miyoshi', 
-      genero: 'Fantasía',
-      sinopsis: 'La historia se centra en la evolución de la relación entre Eliana y Christopher, así como en los desafíos que enfrentan al tener que elegir entre su amor por los libros y su compromiso con el futuro de la nación.',
-      imagen: 'assets/mangas/mangas-novedades/princesa_bibliofila_7.jpg'
-    },
-    {
-      nombre: 'Blue period',
-      volumen: 16,
-      autor: 'Tsubasa Yamaguchi',
-      genero: 'Drama',
-      sinopsis: 'La historia sigue a Yatora Yaguchi, un estudiante de secundaria que descubre su pasión por el arte y decide dedicarse a él, enfrentándose a los desafíos de la vida artística y la presión social.',
-      imagen: 'assets/mangas/mangas-novedades/blue_period_16.jpg'
-    }
-  ];
+  novedades: Manga[] = [];
+  currentUsername: string = '';
 
   constructor(
     private menu: MenuController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private databaseService: DatabaseServiceService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
+    this.cargarNovedades();
   }
 
-  verDetalleManga(manga: any) {
+  ionViewWillEnter() {
+    this.currentUsername = localStorage.getItem('username') || '';
+    this.cargarNovedades();
+  }
+
+  // Método que carga los mangas de novedades
+  async cargarNovedades() {
+    try {
+      // Obtener mangas de novedades desde la base de datos
+      this.novedades = await this.databaseService.obtenerMangasPorCategoria('novedades');
+      
+      // Si hay un usuario logueado, verificar el estado de cada manga en sus listas
+      if (this.currentUsername) {
+        await this.actualizarEstadoMangas();
+      }
+    } catch (error) {
+      console.error('Error al cargar novedades:', error);
+    }
+  }
+
+  // Método que actualiza el estado de los mangas (si están en colección o wishlist)
+  async actualizarEstadoMangas() {
+    for (const manga of this.novedades) {
+      if (manga.id) {
+        // Verificar si está en colección
+        const enColeccion = await this.databaseService.mangaEnLista(this.currentUsername, manga.id, 'coleccion');
+        // Verificar si está en wishlist
+        const enWishlist = await this.databaseService.mangaEnLista(this.currentUsername, manga.id, 'wishlist');
+        
+        // Agregar propiedades al objeto manga
+        (manga as any).isInCollection = enColeccion;
+        (manga as any).isInWishlist = enWishlist;
+      }
+    }
+  }
+
+  // Método para navegar a la página de detalle del manga
+  verDetalleManga(manga: Manga) {
     this.navCtrl.navigateForward('/detalle-manga', {
       state: { manga }
     });
+  }
+
+  // Método que muestra una alerta si el usuario no está logueado
+  async mostrarAlertaLogin() {
+    const alert = await this.alertController.create({
+      header: 'Iniciar sesión requerido',
+      message: 'Debes iniciar sesión para agregar mangas a tus listas personales.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Ir al login',
+          handler: () => {
+            this.navCtrl.navigateForward('/login');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Método para agregar un manga a la colección del usuario
+  async agregarAColeccion(manga: Manga) {
+    if (!this.currentUsername) {
+      await this.mostrarAlertaLogin();
+      return;
+    }
+
+    if (manga.id) {
+      try {
+        await this.databaseService.agregarMangaUsuario(this.currentUsername, manga.id, 'coleccion');
+        (manga as any).isInCollection = true;
+      } catch (error) {
+        console.error('Error al agregar a colección:', error);
+      }
+    }
+  }
+
+  // Método para agregar un manga a la wishlist del usuario
+  async agregarAWishlist(manga: Manga) {
+    if (!this.currentUsername) {
+      await this.mostrarAlertaLogin();
+      return;
+    }
+
+    if (manga.id) {
+      try {
+        await this.databaseService.agregarMangaUsuario(this.currentUsername, manga.id, 'wishlist');
+        (manga as any).isInWishlist = true;
+      } catch (error) {
+        console.error('Error al agregar a wishlist:', error);
+      }
+    }
+  }
+
+  // Método para quitar un manga de la colección del usuario
+  async quitarDeColeccion(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.currentUsername, manga.id, 'coleccion');
+        (manga as any).isInCollection = false;
+      } catch (error) {
+        console.error('Error al quitar de colección:', error);
+      }
+    }
+  }
+
+  // Método para quitar un manga de la wishlist del usuario
+  async quitarDeWishlist(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.currentUsername, manga.id, 'wishlist');
+        (manga as any).isInWishlist = false;
+      } catch (error) {
+        console.error('Error al quitar de wishlist:', error);
+      }
+    }
   }
 }

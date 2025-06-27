@@ -17,13 +17,30 @@
     <h2 class="mangateca-title">MI COLECCIÓN</h2>
   </div>
 
+  <!-- Mensaje cuando no hay mangas en la colección -->
+  <div class="mensaje-vacio" *ngIf="miColeccion.length === 0">
+    <ion-icon name="library-outline" class="icono-vacio"></ion-icon>
+    <h3>Aún no has añadido mangas a tu colección</h3>
+    <p>Explora el catálogo y añade los mangas que tienes a tu colección personal</p>
+    <ion-button fill="outline" routerLink="/tabs/home">
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+      Explorar mangas
+    </ion-button>
+  </div>
+
   <!-- Listado de mangas añadidos en mi colección usando el componente MangaCard -->
-  <ion-grid>
+  <ion-grid *ngIf="miColeccion.length > 0">
     <ion-row>
       <ion-col size="6" *ngFor="let manga of miColeccion">
         <app-manga-card 
           [manga]="manga"
-          (mangaClick)="verDetalleManga($event)">
+          [showActions]="true"
+          [isInCollection]="manga.isInCollection ?? false"
+          [isInWishlist]="manga.isInWishlist ?? false"
+          (mangaClick)="verDetalleManga($event)"
+          (addToWishlist)="agregarAWishlist($event)"
+          (removeFromCollection)="quitarDeColeccion($event)"
+          (removeFromWishlist)="quitarDeWishlist($event)">
         </app-manga-card>
       </ion-col>
     </ion-row>

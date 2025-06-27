@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController, NavController, AlertController } from '@ionic/angular';
+import { DatabaseServiceService } from '../services/database-service.service';
+import { Manga } from '../components/manga-card/manga-card.component';
 
 @Component({
   selector: 'app-home',
@@ -12,79 +14,14 @@ import { MenuController, NavController } from '@ionic/angular';
 export class HomePage implements OnInit {
   username: string = '';
   showWelcomeMessage: boolean = true;
-
-  // Listado de mangas
-  mangas = [
-    { 
-      nombre: 'One Piece', 
-      volumen: 51, 
-      autor: 'Eiichiro Oda', 
-      genero: 'Aventura',
-      sinopsis:'Narra la historia de Monkey D. Luffy, un joven que sueña con convertirse en el Rey de los Piratas. Para ello, viaja por el Grand Line buscando el legendario tesoro llamado One Piece.', 
-      imagen: 'assets/mangas/mangas-home/one_piece_51.jpg'
-    },
-    { 
-      nombre: 'Naruto', 
-      volumen: 54, 
-      autor: 'Masashi Kishimoto', 
-      genero: 'Acción',
-      sinopsis: 'Naruto Uzumaki es un joven ninja que busca reconocimiento y sueña con convertirse en Hokage, el líder de su aldea. A lo largo de su viaje, enfrenta desafíos y descubre secretos sobre su pasado.',
-      imagen: 'assets/mangas/mangas-home/naruto_54.jpg'
-    },
-    { 
-      nombre: 'Dragon Ball Super',
-      volumen: 7,
-      autor: 'Akira Toriyama', 
-      genero: 'Aventura',
-      sinopsis: 'Continúa las aventuras de Goku y sus amigos después de la derrota de Majin Buu, enfrentándose a nuevos enemigos y explorando nuevos universos.',
-      imagen: 'assets/mangas/mangas-home/dbs_7.jpg'
-    },
-    { 
-      nombre: 'Attack on Titan', 
-      volumen: 34, 
-      autor: 'Hajime Isayama', 
-      genero: 'Fantasía oscura',
-      sinopsis: 'En un mundo donde la humanidad vive rodeada de muros para protegerse de gigantes devoradores de humanos, Eren Yeager y sus amigos se unen a la lucha por la supervivencia.',
-      imagen: 'assets/mangas/mangas-home/attack_on_titan_34.jpg'
-    },
-    { 
-      nombre: 'Death Note', 
-      volumen: 12, 
-      autor: 'Tsugumi Ohba', 
-      genero: 'Psicológico',
-      sinopsis: 'Un estudiante de secundaria encuentra un cuaderno que le permite matar a cualquier persona cuyo nombre escriba en él. Comienza una caza delictiva para eliminar criminales, mientras es perseguido por un detective.',
-      imagen: 'assets/mangas/mangas-home/death_note_12.jpg'
-    },
-    { 
-      nombre: 'My Hero Academia', 
-      volumen: 29, 
-      autor: 'Kohei Horikoshi', 
-      genero: 'Superhéroes',
-      sinopsis: 'En un mundo donde la mayoría de las personas tienen superpoderes, Izuku Midoriya, un joven sin habilidades, sueña con convertirse en un héroe. Tras un encuentro con el héroe All Might, recibe la oportunidad de asistir a una academia de héroes.',
-      imagen: 'assets/mangas/mangas-home/mha_29.jpg'
-    },
-    { 
-      nombre: 'Oshi no ko', 
-      volumen: 3, 
-      autor: 'Aka Akasaka', 
-      genero: 'Comedia dramática',
-      sinopsis: 'La historia sigue a Ai Hoshino, una idol que es asesinada, y a sus hijos gemelos que buscan venganza mientras navegan por el oscuro mundo del entretenimiento japonés.',
-      imagen: 'assets/mangas/mangas-home/oshi_no_ko_3.jpg'
-    },
-    {
-      nombre: 'Jujutsu Kaisen',
-      volumen: 11,
-      autor: 'Gege Akutami',
-      genero: 'Sobrenatural',
-      sinopsis: 'Yuji Itadori, un estudiante de secundaria, se convierte en un recipiente para un poderoso espíritu maldito llamado Ryomen Sukuna. Ahora debe aprender a controlar sus poderes y luchar contra maldiciones junto a otros hechiceros.',
-      imagen: 'assets/mangas/mangas-home/jjk_11.jpg'
-    }
-  ];
+  mangas: Manga[] = [];
 
   constructor(
     private router: Router,
     private menu: MenuController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private databaseService: DatabaseServiceService,
+    private alertController: AlertController
   ) {
     // Obtener el username del estado de la navegación (solo al iniciar sesión)
     const navigation = this.router.getCurrentNavigation();
@@ -99,6 +36,8 @@ export class HomePage implements OnInit {
       this.username = localStorage.getItem('username') || '';
     }
     
+    this.cargarMangas();
+    
     // Oculta el mensaje de bienvenida después de 5 segundos
     setTimeout(() => {
       this.showWelcomeMessage = false;
@@ -108,11 +47,123 @@ export class HomePage implements OnInit {
   ionViewWillEnter() {
     // Obtener el username del localStorage cada vez que se entra a la página
     this.username = localStorage.getItem('username') || '';
+    this.cargarMangas();
   }
 
-  verDetalleManga(manga: any) {
+  // Método para cargar los mangas desde la base de datos
+  async cargarMangas() {
+    try {
+      // Obtener todos los mangas de todas las categorías desde la base de datos
+      this.mangas = await this.databaseService.obtenerTodosLosMangas();
+      
+      // Si hay un usuario logueado, verificar el estado de cada manga en sus listas
+      if (this.username) {
+        await this.actualizarEstadoMangas();
+      }
+    } catch (error) {
+      console.error('Error al cargar mangas:', error);
+    }
+  }
+
+  // Método que actualiza el estado de los mangas (si están en colección o wishlist)
+  async actualizarEstadoMangas() {
+    for (const manga of this.mangas) {
+      if (manga.id) {
+        // Verificar si está en colección
+        const enColeccion = await this.databaseService.mangaEnLista(this.username, manga.id, 'coleccion');
+        // Verificar si está en wishlist
+        const enWishlist = await this.databaseService.mangaEnLista(this.username, manga.id, 'wishlist');
+        
+        // Agregar propiedades al objeto manga
+        (manga as any).isInCollection = enColeccion;
+        (manga as any).isInWishlist = enWishlist;
+      }
+    }
+  }
+
+  // Muestra una alerta si el usuario no está logueado al intentar agregar un manga
+  async mostrarAlertaLogin() {
+    const alert = await this.alertController.create({
+      header: 'Iniciar sesión requerido',
+      message: 'Debes iniciar sesión para agregar mangas a tus listas personales.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Ir al login',
+          handler: () => {
+            this.navCtrl.navigateForward('/login');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // Navega a la página de detalles del manga seleccionado
+  verDetalleManga(manga: Manga) {
     this.navCtrl.navigateForward('/detalle-manga', {
       state: { manga }
     });
+  }
+
+  // Agrega un manga a la colección del usuario
+  async agregarAColeccion(manga: Manga) {
+    if (!this.username) {
+      await this.mostrarAlertaLogin();
+      return;
+    }
+
+    if (manga.id) {
+      try {
+        await this.databaseService.agregarMangaUsuario(this.username, manga.id, 'coleccion');
+        (manga as any).isInCollection = true;
+      } catch (error) {
+        console.error('Error al agregar a colección:', error);
+      }
+    }
+  }
+
+  // Agrega un manga a la wishlist del usuario
+  async agregarAWishlist(manga: Manga) {
+    if (!this.username) {
+      await this.mostrarAlertaLogin();
+      return;
+    }
+
+    if (manga.id) {
+      try {
+        await this.databaseService.agregarMangaUsuario(this.username, manga.id, 'wishlist');
+        (manga as any).isInWishlist = true;
+      } catch (error) {
+        console.error('Error al agregar a wishlist:', error);
+      }
+    }
+  }
+
+  // Quita un manga de la colección del usuario
+  async quitarDeColeccion(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.username, manga.id, 'coleccion');
+        (manga as any).isInCollection = false;
+      } catch (error) {
+        console.error('Error al quitar de colección:', error);
+      }
+    }
+  }
+
+  // Quita un manga de la wishlist del usuario
+  async quitarDeWishlist(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.username, manga.id, 'wishlist');
+        (manga as any).isInWishlist = false;
+      } catch (error) {
+        console.error('Error al quitar de wishlist:', error);
+      }
+    }
   }
 }

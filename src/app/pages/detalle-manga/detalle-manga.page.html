@@ -55,21 +55,19 @@
       <!-- Botones wishlist y colección -->
       <div class="action-buttons">
         <!-- Botón dinámico de wishlist que cambia según si el manga está añadido en la wishlist o no -->
-        <!-- (click): Solo aparece quitarDeWishlist() si el manga viene de la wishlist -->
         <ion-button expand="block" 
-                    [class]="esDeWishlist ? 'wishlist-button-remove' : 'wishlist-button'"
-                    (click)="esDeWishlist ? quitarDeWishlist() : null">
-          <ion-icon [name]="esDeWishlist ? 'trash-outline' : 'heart-outline'" slot="start"></ion-icon>
-          {{ esDeWishlist ? 'Quitar de Mi Wishlist' : 'Añadir a Wishlist' }}
+                    [class]="isInWishlist ? 'wishlist-button-remove' : 'wishlist-button'"
+                    (click)="isInWishlist ? quitarDeWishlist() : agregarAWishlist()">
+          <ion-icon [name]="isInWishlist ? 'trash-outline' : 'heart-outline'" slot="start"></ion-icon>
+          {{ isInWishlist ? 'Quitar de Mi Wishlist' : 'Añadir a Wishlist' }}
         </ion-button>
         
         <!-- Botón dinámico de colección que cambia según si el manga está añadido en la colección o no -->
-        <!-- (click): Solo aparece quitarDeColeccion() si el manga viene de la mangateca -->
         <ion-button expand="block" 
-                    [class]="esDeMangateca ? 'collection-button-remove' : 'collection-button'"
-                    (click)="esDeMangateca ? quitarDeColeccion() : null">
-          <ion-icon [name]="esDeMangateca ? 'trash-outline' : 'library-outline'" slot="start"></ion-icon>
-          {{ esDeMangateca ? 'Quitar de Mi Colección' : 'Añadir a Mi Colección' }}
+                    [class]="isInCollection ? 'collection-button-remove' : 'collection-button'"
+                    (click)="isInCollection ? quitarDeColeccion() : agregarAColeccion()">
+          <ion-icon [name]="isInCollection ? 'trash-outline' : 'library-outline'" slot="start"></ion-icon>
+          {{ isInCollection ? 'Quitar de Mi Colección' : 'Añadir a Mi Colección' }}
         </ion-button>
       </div>
     </div>

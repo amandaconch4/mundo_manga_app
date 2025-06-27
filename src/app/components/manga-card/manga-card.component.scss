@@ -35,3 +35,44 @@ ion-card-title {
   text-align: center;
   margin: 0;
 }
+
+// Estilos para los botones de acción
+.action-buttons {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  ion-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --padding-top: 4px;
+    --padding-bottom: 4px;
+    font-size: 0.8em;
+    height: 32px;
+    margin: 0;
+    --border-radius: 6px;
+    font-weight: 500;
+    --background: transparent;
+    --background-hover: transparent;
+    --background-activated: transparent;
+
+    ion-icon {
+      font-size: 16px;
+    }
+
+    // Botón de colección (texto morado)
+    &.collection-button {
+      --color: #5a1b8d;
+      --color-hover: #4a1673;
+      --color-activated: #4a1673;
+    }
+
+    // Botón de wishlist (texto rosado)
+    &.wishlist-button {
+      --color: #e653ba;
+      --color-hover: #d13da8;
+      --color-activated: #d13da8;
+    }
+  }
+}

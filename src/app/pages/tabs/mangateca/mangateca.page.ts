@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
+import { DatabaseServiceService } from '../../../services/database-service.service';
+import { Manga } from '../../../components/manga-card/manga-card.component';
 
 @Component({
   selector: 'app-mangateca',
@@ -10,87 +12,119 @@ import { NavController } from '@ionic/angular';
 export class MangatecaPage implements OnInit {
 
   // Listado de mangas en mi colección
-  miColeccion = [
-    { 
-      nombre: 'Look back', 
-      volumen: 'Único', 
-      autor: 'Tatsuki Fujimoto', 
-      genero: 'Slice of life',
-      sinopsis: 'Narra la historia de Ayumu Fujino, una joven mangaka talentosa que, motivada por la rivalidad y la amistad con un compañero de clase solitario, Kyomoto, se esfuerza por mejorar su arte y encuentra un propósito en la creación artística.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/look_back.jpg'
-    },
-    { 
-      nombre: 'Moriarty el patriota', 
-      volumen: 8, 
-      autor: 'Ryosuke Takeuchi', 
-      genero: 'Misterio',
-      sinopsis: 'Una reimaginación de Sherlock Holmes desde la perspectiva de su enemigo, James Moriarty, quien busca derrocar a la aristocracia británica.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/moriarty_8.jpeg'
-    },
-    { 
-      nombre: 'Imakako',
-      volumen: 'Único',
-      autor: 'Daruma Matsuura', 
-      genero: 'Drama',
-      sinopsis: 'Está centrado en la pérdida y el duelo, explorando cómo Ima y Tsurumi, dos personajes que cargan con el peso de la pérdida, se enfrentan a su sufrimiento y buscan formas de seguir adelante.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/imakako.jpg'
-    },
-    { 
-      nombre: 'Erased', 
-      volumen: 8, 
-      autor: 'Kei Sanbe', 
-      genero: 'Suspenso',
-      sinopsis: 'Satoru Fujinuma, un aspirante a mangaka tiene la habilidad de viajar al pasado para evitar tragedias. Tras descubrir que su madre fue asesinada, Satoru se ve obligado a viajar 18 años al pasado para detener el secuestro y asesinato de su compañera de clase, Kayo.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/erased_8.jpg'
-    },
-    { 
-      nombre: 'Psycho-Pass', 
-      volumen: 1, 
-      autor: 'Gen Urobuchi', 
-      genero: 'Acción',
-      sinopsis: 'En un futuro distópico, la sociedad está controlada por un sistema que mide el estado mental de las personas. La historia sigue a Akane Tsunemori, una inspectora que debe lidiar con criminales y el sistema que la controla.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/psycho_pass_1.jpg'
-    },
-    { 
-      nombre: 'Anohana', 
-      volumen: 2, 
-      autor: 'Cho-Heiwa Busters, Mitsu Izumi', 
-      genero: 'Drama', 
-      sinopsis: 'Narra la historia de un grupo de amigos de la infancia que se separan después de la trágica muerte de uno de ellos, Meiko "Menma" Honma.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/anohana_2.jpg'
-    },
-    { 
-      nombre: 'Uzumaki', 
-      volumen: 'Único', 
-      autor: 'Junji Ito', 
-      genero: 'Horror',
-      sinopsis: 'Una pequeña ciudad japonesa se ve afectada por una extraña maldición relacionada con espirales. Kirie Goshima y su novio Shuichi Saito intentan descubrir el origen de esta maldición y enfrentarse a sus consecuencias aterradoras.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/uzumaki.jpg'
-    },
-    {
-      nombre: 'Spy x family',
-      volumen: 10,
-      autor: 'Tatsuya Endo',
-      genero: 'Comedia de acción',
-      sinopsis: 'La historia sigue a un espía que debe formar una familia falsa para completar una misión, sin saber que su esposa es una asesina y su hija es una telépata.',
-      imagen: 'assets/mangas/mangas-mi-coleccion/spy_x_family_10.jpg'
-    }
-  ];
+  miColeccion: Manga[] = [];
+  currentUsername: string = '';
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private databaseService: DatabaseServiceService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
+    this.cargarColeccion();
+  }
+
+  ionViewWillEnter() {
+    this.currentUsername = localStorage.getItem('username') || '';
+    this.cargarColeccion();
+  }
+
+  // Método que carga la colección de mangas del usuario
+  async cargarColeccion() {
+    try {
+      if (this.currentUsername) {
+        // Obtener mangas de la colección personal del usuario
+        this.miColeccion = await this.databaseService.obtenerMangasUsuario(this.currentUsername, 'coleccion');
+        
+        // Marcar todos como en colección
+        for (const manga of this.miColeccion) {
+          (manga as any).isInCollection = true;
+          (manga as any).isInWishlist = await this.databaseService.mangaEnLista(this.currentUsername, manga.id!, 'wishlist');
+        }
+      } else {
+        // Si no hay usuario logueado, mostrar mangas de ejemplo
+        this.miColeccion = await this.databaseService.obtenerMangasPorCategoria('coleccion');
+        for (const manga of this.miColeccion) {
+          (manga as any).isInCollection = false;
+          (manga as any).isInWishlist = false;
+        }
+      }
+    } catch (error) {
+      console.error('Error al cargar colección:', error);
+    }
+  }
+
+  // Método que muestra una alerta si el usuario no está logueado
+  async mostrarAlertaLogin() {
+    const alert = await this.alertController.create({
+      header: 'Iniciar sesión requerido',
+      message: 'Debes iniciar sesión para agregar mangas a tus listas personales.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Ir al login',
+          handler: () => {
+            this.navCtrl.navigateForward('/login');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   // Método para navegar a la página de detalle del manga
-  verDetalleManga(manga: any) {
+  verDetalleManga(manga: Manga) {
     this.navCtrl.navigateForward('/detalle-manga', {
       state: { 
         manga,
         fromMangateca: true
       }
     });
+  }
+
+  // Método para agregar un manga a la wishlist del usuario
+  async agregarAWishlist(manga: Manga) {
+    if (!this.currentUsername) {
+      await this.mostrarAlertaLogin();
+      return;
+    }
+
+    if (manga.id) {
+      try {
+        await this.databaseService.agregarMangaUsuario(this.currentUsername, manga.id, 'wishlist');
+        (manga as any).isInWishlist = true;
+      } catch (error) {
+        console.error('Error al agregar a wishlist:', error);
+      }
+    }
+  }
+
+  // Método para quitar un manga de la colección del usuario
+  async quitarDeColeccion(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.currentUsername, manga.id, 'coleccion');
+        // Remover de la lista local
+        this.miColeccion = this.miColeccion.filter(m => m.id !== manga.id);
+      } catch (error) {
+        console.error('Error al quitar de colección:', error);
+      }
+    }
+  }
+
+  // Método para quitar un manga de la wishlist del usuario
+  async quitarDeWishlist(manga: Manga) {
+    if (manga.id) {
+      try {
+        await this.databaseService.quitarMangaUsuario(this.currentUsername, manga.id, 'wishlist');
+        (manga as any).isInWishlist = false;
+      } catch (error) {
+        console.error('Error al quitar de wishlist:', error);
+      }
+    }
   }
 }
