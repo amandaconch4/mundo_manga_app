@@ -65,7 +65,10 @@
     <div class="form-group">
       <label class="form-label">Contraseña</label>
       <ion-item lines="none" class="form-item">
-        <ion-input type="password" [(ngModel)]="password" name="password" required style="position: relative; width: 100%;"></ion-input>
+        <ion-input [type]="mostrarPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" required style="position: relative; width: 100%;"> </ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePassword()" class="password-toggle-btn">
+          <ion-icon [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
       </ion-item>
     </div>
 

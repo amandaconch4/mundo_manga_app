@@ -148,3 +148,21 @@
   border: 1px dashed #ada9a9;
   color: #757575;
 }
+
+// Estilos para el botón de mostrar/ocultar contraseña
+.password-toggle-btn {
+  --color: #5a1b8d;
+  --background: transparent;
+  margin: 0;
+  padding: 0;
+  min-width: 40px;
+  height: 40px;
+  
+  &:hover {
+    --color: #e653ba;
+  }
+  
+  ion-icon {
+    font-size: 1.5em;
+  }
+}

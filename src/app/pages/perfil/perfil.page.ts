@@ -23,6 +23,9 @@ export class PerfilPage implements OnInit {
   
   // Variable para almacenar la imagen de perfil
   profileImage: string | null = null;
+  
+  // Variable para mostrar/ocultar contraseña
+  mostrarPassword: boolean = false;
 
   constructor(
     private alertController: AlertController,
@@ -166,6 +169,11 @@ export class PerfilPage implements OnInit {
   //Cambia a la imagen por defecto si hay un error
   onImageError(event: any) {
     event.target.src = 'assets/icon/favicon.png';
+  }
+
+  // Método para mostrar/ocultar la contraseña
+  togglePassword() {
+    this.mostrarPassword = !this.mostrarPassword;
   }
 
   // Método que muestra alerta
