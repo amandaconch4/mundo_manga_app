@@ -27,10 +27,7 @@
   <!-- Sección de foto de perfil -->
   <div class="profile-photo-section">
     <div class="profile-photo-container">
-      <img 
-        [src]="profileImage || 'assets/icon/favicon.png'" 
-        class="profile-photo"
-        (error)="onImageError($event)">
+      <img [src]="profileImage || 'assets/icon/favicon.png'" class="profile-photo" (error)="onImageError($event)">
       <div class="photo-overlay" (click)="showPhotoOptions()">
         <ion-icon name="camera-outline"></ion-icon>
       </div>
