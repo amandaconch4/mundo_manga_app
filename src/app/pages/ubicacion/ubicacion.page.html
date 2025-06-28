@@ -2,14 +2,39 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button menu="menu"></ion-menu-button>
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
     </ion-buttons>
     <!-- Logo de la aplicación -->
     <div class="logo-container">
       <img src="assets/logo_letras.png" alt="MundoManga Logo" class="header-logo">
     </div>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <h1 class="ubicacion-title">UBICACIÓN</h1>
+  <!-- Título de la página -->
+  <div class="container">
+    <h1 class="ubicacion-title">MI UBICACIÓN</h1>
+  </div>
+
+  <!-- Descripción -->
+  <div class="descripcion">
+    <p>Obtén tu ubicación actual en tiempo real</p>
+  </div>
+
+  <!-- Botón para obtener ubicación -->
+  <div class="boton-container">
+    <ion-button expand="block" fill="solid" (click)="obtenerUbicacion()" class="boton-ubicacion">
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      Obtener mi ubicación
+    </ion-button>
+  </div>
+
+  <!-- Contenedor del mapa -->
+  <div class="mapa-container" id="mapa-container">
+    <iframe id="mapa" class="mapa" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen> </iframe>
+  </div>
+</ion-content>
